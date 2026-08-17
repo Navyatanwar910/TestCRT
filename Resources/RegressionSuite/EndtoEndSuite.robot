@@ -53,7 +53,6 @@ Verify CoreTech/Finance can create a valid program with all mandatory setup data
    VerifyText         The Program was successfully created!
    ClickText          Finish
    VerifyText         Testing1 - September 2026   
-Verify program creation is prevented when mandatory fields are missing, invalid, duplicate, or inconsistent.
     [Documentation]    Validates that a validation rule or field constraint fires when the acronym is too long
     [Tags]             Negative
   
@@ -134,7 +133,19 @@ Verify program creation is prevented when mandatory fields are missing, invalid,
     VerifyText         A Program with acronym "ABCDFRGT123456BGRTiqn21" already exists in this fiscal year. Please use a different acronym or choose a start date in a different fiscal year.
     ClickText          Previous                     anchor=Finish
 
+
 Verify PL can make a valid enrollment change without payment and that enrollment status and program records update correctly.
+    [Documentation]
+    ClickText          Setup    anchor=Content    recognition_mode=vision
+    ClickText    Financials    anchor=PayExed
+    ClickText    Edit Invoice Template
+    ComboBox    Search Invoice Templates...    Standard OE Invoice Template    index=1
+    ClickText    Save
+    ClickText    Admit Email
+    ClickText    Admit Email Setup
+    ClickText    Email Template  
+    ClickText    Admit - On Campus
+    ClickText    Save
 
 Verify PL can revert an enrollment change without payment and that all related records return to their previous valid state.
 
