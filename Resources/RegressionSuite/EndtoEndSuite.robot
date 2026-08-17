@@ -6,8 +6,9 @@ Suite Setup             Open Browser    https://gsbexeced--full.sandbox.lightnin
 Suite Teardown          Close All Browsers
 
 *** Test Cases ***
-    Verify login as system Admin and through setup as Finance user
-    [Documentation] User logs in salesforce.
+Verify login as system Admin and through setup as Finance user
+    [Documentation]    User logs in salesforce.
+
     OpenBrowser    ${login_url}    chrome
     VerifyText    Salesforce login
     TypeText      Username         ${username_Admin}
@@ -16,7 +17,7 @@ Suite Teardown          Close All Browsers
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    ARN9BS91X8
+    TypeText      Verification Code    BO4DCHYK5U
     ClickText     Verify
     VerifyText    Home
     ClickText    Setup
@@ -25,32 +26,135 @@ Suite Teardown          Close All Browsers
     ClickText    Operations User
     ClickText    Login
     ClickText    Programs
+    
+Verify CoreTech/Finance can create a valid program with all mandatory setup data and that the program is available for downstream enrollment and financial processing.
+    [Documentation]    Validates successful creation of a Program record using mandatory fields and exactly 25-char acronym.
+  # 1. Navigate to the Program Custom Object
+   ClickText          Programs
+       ClickText          New
+   ClickText          Open Enrollment
+   ClickText          Next
+  # 2. Populate text fields
+   TypeText           Program Name                   Executive Leadership Cohort 2028
+   TypeText           Acronym                        Testing1
+   TypeText           Root Label                     EXEC-LEAD
+  
+  # 3. Handle Dates
+   TypeText           Start Date                     09/01/2026
+   TypeText           End Date                       08/31/2027
+   TypeText           Program Fee                    200000
 
-    Verify CoreTech/Finance can create a valid program with all mandatory setup data and that the program is available for downstream enrollment and financial processing.
-     
-    Verify program creation is prevented when mandatory fields are missing, invalid, duplicate, or inconsistent.
+  # 4. Handle Picklists & Verification of Default Flags
+   DropDown    Acceptance Criteria    Application/Admission
+   DropDown    Program Status    Confirmed 
 
-    Verify PL can make a valid enrollment change without payment and that enrollment status and program records update correctly.
+  # 5. Save and Confirm Formulations
+   ClickText          Save                   timeout=20s      
+   VerifyText         The Program was successfully created!
+   ClickText          Finish
+   VerifyText         Testing1 - September 2026   
+Verify program creation is prevented when mandatory fields are missing, invalid, duplicate, or inconsistent.
+    [Documentation]    Validates that a validation rule or field constraint fires when the acronym is too long
+    [Tags]             Negative
+  
+   ClickElement       xpath=//a[@title='New']
+   VerifyText         New Program                    anchor=Cancel
+   ClickText          Open Enrollment
+   ClickText          Next
+  # Populate fields with an invalid 26 character acronym
+   TypeText           Program Name                   Invalid Acronym Test
+   TypeText           Acronym                ${INVALID_ACRONYM}
+   VerifyText         Acronym length should not exceed 25 characters
+   TypeText           Root Label                     INVALID-TEST
+   TypeText           Start Date                     09/01/2026
+   TypeText           End Date                       08/31/2027
+   TypeText           Program Fee                    200000
+   DropDown           Acceptance Criteria            Application/Admission
+   DropDown           Program Status                 Confirmed
+  # Attempt to Save
+   ClickText          Save                          
+  
+  # Assert UI validation message appears
+   VerifyText         Acronym length should not exceed 25 characters
+   ClickText          Cancel
 
-    Verify PL can revert an enrollment change without payment and that all related records return to their previous valid state.
+    ClickText     Programs             anchor=Home
+    ClickElement       xpath=//a[@title='New']
+    VerifyText         New Program                    anchor=Cancel
+    ClickText          Open Enrollment
+    ClickText          Next
+    TypeText           Root Label                     INVALID-TEST
+    TypeText           Start Date                     08/06/2026
+    TypeText           End Date                       08/09/2026
+    TypeText           Program Fee                    200000
+    DropDown           Acceptance Criteria            Application/Admission
+    DropDown           Program Status                 Confirmed  
+                            
+    VerifyText         Complete this field.
+    ClickText          Save                        anchor=Previous
+  # Assert UI validation message appears
+    VerifyText         Please enter some valid input. Input is not optional.
+    ClickText          Cancel
 
-    Verify invalid enrollment changes are rejected when participant, program, stage, or prerequisite data is invalid.
+    ClickText     Programs             anchor=Home
+    ClickElement       xpath=//a[@title='New']
+    VerifyText         New Program                    anchor=Cancel
+    ClickText          Open Enrollment
+    ClickText          Next
+    TypeText           Program Name                   Valid Acronym Test
+    TypeText           Acronym                ${VALID_ACRONYM}
+    TypeText           Root Label                     INVALID-TEST
+    TypeText           Start Date                     08/06/2026
+    TypeText           End Date                       08/06/2026
+    TypeText           Program Fee                    200000
+    DropDown           Acceptance Criteria            Application/Admission
+    DropDown           Program Status                 Confirmed  
+                            
+    ClickText          Save                        anchor=Previous
+  # Assert UI validation message appears
+    VerifyText         Program Start Date should be greater than Program End Date.
+    VerifyText         End Date is required and must be after Start Date.
+    ClickText          Cancel
+    ClickText     Programs             anchor=Home
+    ClickElement       xpath=//a[@title='New']
+    VerifyText         New Program                    anchor=Cancel
+    ClickText          Open Enrollment
+    ClickText          Next
+    TypeText           Program Name                   Valid Acronym Test
+    TypeText           Acronym                ${VALID_ACRONYM}
+    TypeText           Root Label                     INVALID-TEST
+    TypeText           Start Date                     08/06/2026
+    TypeText           End Date                       08/06/2026
+    TypeText           Program Fee                    200000
+    DropDown           Acceptance Criteria            Application/Admission
+    DropDown           Program Status                 Confirmed  
+                            
+    ClickText          Save                        anchor=Previous
+  # Assert UI validation message appears
+    VerifyText         A Program with acronym "ABCDFRGT123456BGRTiqn21" already exists in this fiscal year. Please use a different acronym or choose a start date in a different fiscal year.
+    ClickText          Previous                     anchor=Finish
 
-    Verify Participant/Payer can make a successful full direct payment and that the invoice, payment, balance, and enrollment status update correctly.
+Verify PL can make a valid enrollment change without payment and that enrollment status and program records update correctly.
 
-    Verify Participant/Payer can make a successful partial direct payment and that the remaining balance is calculated correctly.
+Verify PL can revert an enrollment change without payment and that all related records return to their previous valid state.
 
-    Verify all supported direct payment methods process successfully and update the invoice and payment status correctly.
+Verify invalid enrollment changes are rejected when participant, program, stage, or prerequisite data is invalid.
 
-    Verify failed, declined, cancelled, or invalid direct payments do not incorrectly update invoice or enrollment financial status.
+Verify Participant/Payer can make a successful full direct payment and that the invoice, payment, balance, and enrollment status update correctly.
 
-    Verify duplicate direct payments are prevented or handled without creating duplicate financial transactions.
+Verify Participant/Payer can make a successful partial direct payment and that the remaining balance is calculated correctly.
 
-    Verify PL/Finance can change an enrollment after full direct payment and that all related financial records remain consistent.
+Verify all supported direct payment methods process successfully and update the invoice and payment status correctly.
 
-    Verify PL/Finance can change an enrollment after partial direct payment and that the outstanding amount is recalculated correctly.
+Verify failed, declined, cancelled, or invalid direct payments do not incorrectly update invoice or enrollment financial status.
 
-    Verify PL/Finance can process a full online refund for an enrollment change and that the payment, invoice, balance, and enrollment records are reconciled.
+Verify duplicate direct payments are prevented or handled without creating duplicate financial transactions.
+
+Verify PL/Finance can change an enrollment after full direct payment and that all related financial records remain consistent.
+
+Verify PL/Finance can change an enrollment after partial direct payment and that the outstanding amount is recalculated correctly.
+
+Verify PL/Finance can process a full online refund for an enrollment change and that the payment, invoice, balance, and enrollment records are reconciled.
 
 Verify PL/Finance can process a partial online refund and that only the eligible amount is refunded and the remaining payment balance is correct.
 
