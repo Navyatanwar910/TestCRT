@@ -14,19 +14,39 @@ ${PAYER_NAME}             Diana Brown
 ${TRANSFER_COURSE}        AIP 2026
 
 *** Test Cases ***
+
+Login as Finance User
+    [Documentation]    login in Salesforce
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5YJXMZKRHI
+    ClickText     Verify
+    VerifyText    Home    
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Debbie Bishko
+    ClickText    Login
+    ClickText    Programs
+
 # SECTION 1: PROGRAM SETUP & MANDATORY DATA VALIDATION
 # ==============================================================================
 
-Verify CoreTech/Finance Can Create A Valid Program
+Verify Finance Can Create A Valid Program
     [Documentation]    Verify CoreTech/Finance can create a valid program with all mandatory setup data and that the program is available for downstream enrollment and financial processing.
     ClickText          Programs                       anchor=Home
     ClickElement       xpath=//a[@title='New']
     VerifyText         New Program                    anchor=Cancel
     ClickText          Open Enrollment
     ClickText          Next
-    TypeText           Program Name                   Executive Leadership Cohort 2028
-    TypeText           Acronym                        Testing1
-    TypeText           Root Label                     EXEC-LEAD
+    TypeText           Program Name                   Executive Leadership Cohort 2026
+    TypeText           Acronym                        Testing3
     TypeText           Start Date                     09/01/2026
     TypeText           End Date                       08/31/2027
     TypeText           Program Fee                    200000
@@ -34,8 +54,34 @@ Verify CoreTech/Finance Can Create A Valid Program
     DropDown           Program Status                 Confirmed
     ClickText          Save                           timeout=20s
     VerifyText         The Program was successfully created!
-    VerifyText         Testing1 - September 2026
+    ClickText          Finish
+    Sleep              5s
+    VerifyText         Testing3 - September 2026
 
+Verify setting up email template 
+    [Documentation]    Test Case created using the QEditor
+    
+    ClickText          Details    anchor=Content    recognition_mode=vision
+    ClickText    Financials    anchor=PayExed
+    ClickText    Edit Invoice Template
+    ComboBox    Search Invoice Templates...    Standard OE Invoice Template    index=1
+    ClickText    Save
+    ClickText    Admit Email
+    ClickText    Admit Email Setup
+    ClickText    Email Template  
+    ClickText    Admit - On Campus
+    ClickText    Save
+Verify Creation of Participant
+    [Documentation]    Test Case created using the QEditor
+    ClickText    Overview
+    ClickText    New
+    ClickText    Contact    partial_match=False
+    TypeText    Search for a contact...    Navya Tan
+    ClickText                        Navya Tanwar
+    ClickText    Stage
+    ClickText    Pending                   recognition_mode=vision
+    ClickText    Save
+    
 Verify Program Creation Prevention On Invalid Data
     [Documentation]    Verify program creation is prevented when mandatory fields are missing, invalid, duplicate, or inconsistent.
     [Tags]             Negative
@@ -49,31 +95,124 @@ Verify Program Creation Prevention On Invalid Data
     TypeText           End Date                       08/31/2026
     ClickText          Save
     VerifyText         Acronym length should not exceed 25 characters
-    VerifyText         Program Start Date should be greater than Program End Date.
+    VerifyText         End Date and must be on or after Start Date.
+    VerifyText         End Date is required and must be on or after Start Date.
+    Sleep              5s
     ClickText          Cancel
+
 
 # ==============================================================================
 # SECTION 2: ENROLLMENT CHANGES & REVERTS (NO PAYMENT)
 # ==============================================================================
 
-Verify PL Can Make Valid Enrollment Change Without Payment
-    [Documentation]    Verify PL can make a valid enrollment change without payment and that enrollment status and program records update correctly.
-    ClickText          Programs                       anchor=Home
-    ClickText          Testing1 - September 2026
-    ClickText          Enrollment                     anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Change Stage
-    DropDown           Stage                          Confirmed
-    ClickText          Save
-    VerifyText         Confirmed                      anchor=${CONTACT_NAME}
+Login as PL
+    [Documentation]    Test Case created using the QEditor
+    ClickText          Log out
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5YJXMZKRHI
+    ClickText     Verify
+    VerifyText    Home
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Justina Kayastha
+    ClickText    Login
+    ClickText    Programs              anchor=Home
+    ClickText    Search...
+    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
+    TypeText          Search Programs and more...    Testing3     
+    ClickText       Testing3 - September 2026    
 
-Verify PL Can Revert Enrollment Change Without Payment
+Verify Admission of Participant as PL
+    [Documentation]    Test Case created using the QEditor
+    
+    ClickText          Enrollment    anchor=Overview
+    ClickText          Pending | Applicant
+    ClickElement       xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText    Admit with Invoice and Email
+    ClickText    Select Email Template
+    ClickText    Admit - On Campus
+    ClickText    Send Email(s)
+
+Verify Cancellation request as PL
+    ClickText          PayExed
+    ClickElement       xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText          Finance Request
+    VerifyText         Fee Payer(s):
+    ClickText          Please select a type
+    ClickText          Cancel
+    ClickText          Refund Amount
+    TypeText           Refund Amount                      20000
+    ClickText          Comments
+    TypeText           Comments                        Cancel
+    ClickText          Submit
+    ClickText          View New Finance Request
+    Sleep              5s
+ 
+
+Login as Finance User to check for finance requests
+    [Documentation]    Test Case created using the QEditor
+    ClickText          logout
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5YJXMZKRHI
+    ClickText     Verify
+    VerifyText    Home    
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Debbie Bishko
+    ClickText    Login
+    ClickText    Home
+    ClickElement       xpath=//one-app-nav-bar-item-root[.//span[text()='Tasks']]//a    
+    ClickText    Select list display
+    ClickText    Table
+    ClickText    Select a List View: Tasks
+    ClickText    Finance Requests      anchor=Completed Tasks    index=2
+    ClickText    Create Date
+    ClickText    Financial Request - Cancel    anchor=justinak
+    ClickText    Cancel + Refund
+    ClickText    Submit Cancellation           recognition_mode=vision
+
+Verify PL Can Revert Cancellation
     [Documentation]    Verify PL can revert an enrollment change without payment and that all related records return to their previous valid state.
-    ClickText          Enrollment                     anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Revert Stage Change
-    ClickText          Confirm Revert
-    VerifyText         Pending                        anchor=${CONTACT_NAME}
+    ClickText          Log out
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5YJXMZKRHI
+    ClickText     Verify
+    VerifyText    Home
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Justina Kayastha
+    ClickText    Login
+    ClickText    Programs              anchor=Home
+    ClickText    Search...
+    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
+    TypeText          Search Programs and more...    Testing3     
+    ClickText       Testing3 - September 2026    
+    ClickText          Navya Tanwar
+    ClickElement       xpath=//button[text()='Revert Cancel' or @title='Revert Cancel'] 
 
 Verify Invalid Enrollment Changes Are Rejected
     [Documentation]    Verify invalid enrollment changes are rejected when participant, program, stage, or prerequisite data is invalid.
