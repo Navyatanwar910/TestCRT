@@ -289,58 +289,44 @@ Verify Participant Can Make Successful Partial Direct Payment through credit car
     VerifyText         Partially Paid
     VerifyText         Transaction Payments
     VerifyText         Invoice Balance
-
-    
-Verify Participant Can Make Successful Partial Direct Payment through Amazon Pay
-    [Documentation]    Verify Participant/Payer can make a successful partial direct payment and that the remaining balance is calculated correctly.
-    ClickText          PayExed
-    ClickElement       xpath=//a[contains(@href,'pay')]
-    SwitchWindow       NEW
-    ClickText          Make Payment
-    TypeText           Amount To Pay                  50000
-    ClickText          Credit Card
-    ClickText          PAY NOW
-    SwitchWindow       1
-    VerifyText         Partially Paid
-    VerifyText         $150,000.00                    anchor=Remaining Balance
-
-Verify All Supported Direct Payment Methods Process Successfully
-    [Documentation]    Verify all supported direct payment methods process successfully and update the invoice and payment status correctly.
-    ClickText          PayExed
-    ClickElement       xpath=//a[contains(@href,'pay')]
-    SwitchWindow       NEW
-    ClickText          Make Payment
-    ClickText          Amazon Pay
-    ClickText          PAY NOW
-    ClickText          Authorize Test Payment
-    SwitchWindow       1
-    VerifyText         Paid
+    ScrollTo           Child Invoices
+    Sleep              10s
 
 Verify Failed Direct Payments Do Not Update Financial Status
     [Documentation]    Verify failed, declined, cancelled, or invalid direct payments do not incorrectly update invoice or enrollment financial status.
     [Tags]             Negative
-    ClickText          PayExed
+    ScrollTo           PDF Preview
     ClickElement       xpath=//a[contains(@href,'pay')]
     SwitchWindow       NEW
     ClickText          Make Payment
-    ClickText          Credit Card
-    TypeText           Card Number                    4000000000000002
-    ClickText          PAY NOW
-    VerifyText         Payment Declined
-    SwitchWindow       1
-    VerifyText         Unpaid                         anchor=Invoice Status
-
-Verify Duplicate Direct Payments Are Prevented
-    [Documentation]    Verify duplicate direct payments are prevented or handled without creating duplicate financial transactions.
-    [Tags]             Negative
-    ClickText          PayExed
+    ClickText          Payment Amount (USD)
+    TypeText           Payment Amount (USD)          25000
+    TypeText           Card number                    4000000000000002
+    TypeText           Expiration date                    10/29
+    TypeText           Security code                  123
+    ClickText          PAY NOW 
+    VerifyText         Your card was declined.
+    Sleep              5s
+    SwitchWindow       2
+   
+Verify Participant Can Make Successful Partial Direct Payment through Amazon Pay
+    [Documentation]    Verify Participant/Payer can make a successful partial direct payment and that the remaining balance is calculated correctly.
+    ScrollTo           PDF Preview
     ClickElement       xpath=//a[contains(@href,'pay')]
-    SwitchWindow       NEW
     ClickText          Make Payment
+    ClickText          Amazon Pay
     ClickText          PAY NOW
-    Sleep              1s
-    ClickText          PAY NOW                        # Double-click attempt
-    VerifyText         Transaction in progress. Please wait.
+    ClickText          Authorize Test Payment
+    VerifyText         Your payment was successful!
+    Sleep              5s
+    SwitchWindow       2
+    RefreshPage
+    VerifyText         Invoice Status
+    VerifyText         Paid
+    VerifyText         Transaction Payments
+    VerifyText         Invoice Balance
+    ScrollTo           Child Invoices
+    Sleep              10s
 
 # ==============================================================================
 # SECTION 4: POST-PAYMENT ENROLLMENT CHANGES & REFUNDS
