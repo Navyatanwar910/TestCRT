@@ -355,7 +355,7 @@ Verify Partial Manual Refund Processing with finance user
     ClickText    Testing3 - September 2026    
     ClickText          PayExed
     ClickText          Testing3-R6449
-    ClickElement       xpath=//button[text()='Create Payment / Refund']
+    ClickElement       xpath=//*[text()='Create Payment / Refund']
     VerifyText
 Verify Full Manual Refund Processing
     [Documentation]    Verify PL/Finance can process a partial online refund and that only the eligible amount is refunded and the remaining payment balance is correct.
@@ -369,29 +369,6 @@ Verify Full Manual Refund Processing
     ClickText          View New Finance Request
     ClickText          Process Online Refund
     VerifyText         Partial Refund Processed: $50,000.00
-
-Verify Full Manual Refund 
-    [Documentation]    Verify PL/Finance can process a full manual refund and that the refund and invoice records are updated correctly.
-    ClickText          PayExed
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Finance Request
-    ClickText          Please select a type
-    ClickText          Manual Refund
-    TypeText           Reference Number               CHK-908123
-    ClickText          Submit
-    VerifyText         Manual Refund Recorded
-
-Verify Partial Manual Refund Processing
-    [Documentation]    Verify PL/Finance can process a partial manual refund and that financial balances remain consistent.
-    ClickText          PayExed
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Finance Request
-    ClickText          Please select a type
-    ClickText          Manual Refund
-    TypeText           Refund Amount                  25000
-    TypeText           Reference Number               CHK-908124
-    ClickText          Submit
-    VerifyText         Partial Manual Refund Recorded
 
 
 Verify Invalid Refund Processing Prevention
@@ -410,221 +387,66 @@ Verify Invalid Refund Processing Prevention
 # SECTION 5: CREDITS & CREDIT TRANSFERS
 # ==============================================================================
 
-Verify Apply Full Credit Balance To Invoice
-    [Documentation]    Verify PL/Finance can apply a full available credit balance to an eligible enrollment or invoice and that the credit balance and invoice balance update correctly.
+Verify Transfer of Participant to another program where the payment made is partial by the Participant
+    [Documentation]    Transfer Actions
     ClickText          PayExed
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Apply Credit
-    ClickText          Full Available Credit
-    ClickText          Apply
-    VerifyText         Credit Applied Successfully
-    VerifyText         $0.00                          anchor=Credit Balance
+    ClickElement       xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText          Finance Request
+    ClickText          Please select a type    anchor=Request Type:
+    ClickText    Transfer               
+    TypeText    Search for a course...    AIP\n    anchor=To Course
+    ClickText    AIP 2027 
+    TypeText     Please provide detailed information about your request...     test
+    ClickText    Submit
 
-Verify Apply Partial Credit Balance To Invoice
-    [Documentation]    Verify PL/Finance can apply a partial credit balance and that the remaining credit and invoice balance are calculated correctly.
-    ClickText          PayExed
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Apply Credit
-    TypeText           Amount To Apply                10000
-    ClickText          Apply
-    VerifyText         Remaining Credit: $15,000.00
+    ClickText     View New Finance Request
+    VerifyText    Financial Request - Transfer
+    ClickText     Transfer                        anchor=Action
+    sleep         2s
+    ClickText     Submit Transfer
+    ClickElement       xpath=//one-app-nav-bar-item-root[.//span[text()='Tasks']]//a    
+    ClickText    Select list display
+    ClickText    Table
+    ClickText    Select a List View: Tasks
+    ClickText    Finance Requests      anchor=Completed Tasks    index=2
+    ClickText    Create Date
+    ClickText    Financial Request - Transfer    
+    ClickElement                       xpath=//a[contains(@href,'Transfer')]
+    ClickText                        Submit Transfer             anchor=cancel
+    ClickText                        Programs
+    ClickText                        Testing3 - September 2026
+    ClickText                        Enrollment                  anchor=Overview
+    ClickText                        Transfer 
+    ClickText                        AIP 2027  
+    SwitchWindow                     NEW
+    ClickText                        Enrollment                  anchor=Overview  
+    VerifyText                       Credit Balance   
+    ClickText                        Navya Tanwar   
+    SwitchWindow                     NEW 
+    ClickText                        Financials                  anchor=Logistics   
+    VerifyText                       Credit Balance
+    Sleep                        10s
+       
+Verify Participant is transfer to another program after making full payment of previous program.
+    SwitchWindow    3
+    ClickText                        Enrollment                  anchor=Overview  
+    ClickElement       xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText         Transfer    anchor=Withdraw
+    TypeText    Search for a course...    AIP\n    anchor=To Course
+    ClickText    AIP3                 anchor=To Course
+    TypeText     Please provide detailed information about your request...     test
+    ClickText    Submit 
+    ClickText     View New Finance Request
+    VerifyText    Financial Request - Transfer
+    ClickText     Transfer                        anchor=Action
+    sleep         2s
+    ClickText     Submit Transfer
+    ClickText     AIP3 - November 2027
 
-Verify Multiple Credit Transfers Between Invoices
-    [Documentation]    Verify multiple credit transfers between eligible invoices are processed successfully and all balances remain consistent.
-    ClickText          PayExed
-    ClickText          Credit Transfers
-    ClickText          New Transfer
-    TypeText           Source Invoice                 INV-1001
-    TypeText           Target Invoice                 INV-1002
-    TypeText           Amount                         5000
-    ClickText          Transfer
-    VerifyText         Transfer Completed
+Verify transfer of participant to a program costing less than what is paid by him
 
-Verify Credit Transfer Revert Workflow
-    [Documentation]    Verify credit transfers can be reverted successfully and that the original credit and invoice balances are restored.
-    ClickText          PayExed
-    ClickText          Credit Transfers
-    ClickElement       xpath=//tr[.//td[contains(text(),'INV-1001')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Revert Transfer
-    ClickText          Confirm
-    VerifyText         Transfer Reverted
+Verify Spliting of Paid Invoice
 
-Verify Prevention Of Invalid Credit Transfers
-    [Documentation]    Verify invalid credit transfers are prevented when the credit is insufficient, expired, unavailable, or assigned to an ineligible invoice.
-    [Tags]             Negative
-    ClickText          PayExed
-    ClickText          Credit Transfers
-    ClickText          New Transfer
-    TypeText           Source Invoice                 INV-EXPIRED
-    TypeText           Target Invoice                 INV-1002
-    TypeText           Amount                         500000
-    ClickText          Transfer
-    VerifyText         Selected source credit is expired or insufficient.
+Verify Spliting of Unpaid Invoice
 
-Verify Credit Balance Consistency Across Enrollment Changes
-    [Documentation]    Verify credit-balance enrollment changes preserve consistency across payments, refunds, credits, invoices, and enrollment records.
-    ClickText          Enrollment                     anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Transfer Course
-    TypeText           Target Program                 ${TRANSFER_COURSE}
-    ClickText          Submit Transfer
-    VerifyText         Credits and Invoices Transferred Consistently
-
-# ==============================================================================
-# SECTION 6: INVOICE SPLITTING & CHILD INVOICE PAYMENTS
-# ==============================================================================
-
-Verify Split Invoice With Predefined Template
-    [Documentation]    Verify PL can split an invoice using a predefined split template and that parent and child invoice amounts and relationships are correct.
-    ClickText          PayExed
-    ClickText          INV-2026-001
-    ClickText          Split Invoice                  recognition_mode=vision
-    ClickText          Apply Template
-    ComboBox           Select Template                Standard 50/50 Split
-    ClickText          Execute Split
-    ScrollTo           Child Invoices
-    VerifyText         Child Invoice 1                anchor=Child Invoices
-    VerifyText         Child Invoice 2                anchor=Child Invoices
-
-Verify Split Invoice With User Defined Criteria
-    [Documentation]    Verify PL can split an invoice using user-defined criteria and that the resulting child invoices contain the correct amounts and allocations.
-    ClickText          PayExed
-    ClickText          INV-2026-002
-    ClickText          Split Invoice                  recognition_mode=vision
-    UseModal           On
-    ClickText          Add Split
-    TypeText           Percent                        60.00%    anchor=Split Type
-    ClickText          Add Split
-    TypeText           Percent                        40.00%    anchor=Remove
-    ClickText          Submit
-    UseModal           Off
-    VerifyText         Child Invoices (2)
-
-Verify Prevention Of Invalid Invoice Splits
-    [Documentation]    Verify invalid split requests are rejected when amounts do not reconcile, required data is missing, or split criteria are invalid.
-    [Tags]             Negative
-    ClickText          PayExed
-    ClickText          INV-2026-002
-    ClickText          Split Invoice                  recognition_mode=vision
-    UseModal           On
-    ClickText          Add Split
-    TypeText           Percent                        70.00%
-    ClickText          Add Split
-    TypeText           Percent                        40.00%
-    ClickText          Submit
-    VerifyText         Total split percentage must equal 100%.
-    ClickText          Cancel
-
-Verify Payer Can Pay Child Invoice Supported Methods
-    [Documentation]    Verify a payer can successfully pay a child invoice using all supported payment methods and that the parent invoice balance is updated correctly.
-    ClickText          PayExed
-    ClickText          INV-2026-002-C1
-    ClickElement       xpath=//a[contains(@href,'pay')]
-    SwitchWindow       NEW
-    ClickText          Make Payment
-    ClickText          Credit Card
-    ClickText          PAY NOW
-    SwitchWindow       1
-    ClickText          INV-2026-002                   # Parent
-    VerifyText         Partially Paid                 anchor=Parent Invoice
-
-Verify Payer Can Pay Parent Invoice Directly
-    [Documentation]    Verify a payer can successfully pay the parent invoice and that all applicable child invoice balances and payment statuses are updated correctly.
-    ClickText          PayExed
-    ClickText          INV-2026-003                   # Parent
-    ClickElement       xpath=//a[contains(@href,'pay')]
-    SwitchWindow       NEW
-    ClickText          Make Payment
-    ClickText          PAY NOW
-    SwitchWindow       1
-    VerifyText         Paid                           anchor=Child Invoice 1
-    VerifyText         Paid                           anchor=Child Invoice 2
-
-Verify Partial And Full Payment Balance Safeguards On Split Invoices
-    [Documentation]    Verify partial and full payments on split child and parent invoices maintain correct balances without double-counting payments.
-    ClickText          PayExed
-    ClickText          INV-2026-004
-    VerifyText         Total Parent Balance Equals Sum Of Unpaid Children
-
-Verify System Integrity Post Invoice Splitting Actions
-    [Documentation]    Verify enrollment changes, direct payments, refunds, credit transfers, and reverts remain financially consistent after invoice splitting.
-    ClickText          PayExed
-    ClickText          INV-2026-004
-    ClickText          Refund Child Invoice
-    ClickText          Confirm Refund
-    VerifyText         Parent Balance Recalculated Correctly
-
-# ==============================================================================
-# SECTION 7: INVOICE CLEARING & TRANSFERS
-# ==============================================================================
-
-Verify PL/Finance Can Clear Eligible Invoice Transfer
-    [Documentation]    Verify PL/Finance can clear an eligible invoice transfer and that the source and destination invoice balances and transfer status reconcile correctly.
-    ClickText          PayExed
-    ClickText          Invoice Transfers
-    ClickElement       xpath=//tr[.//td[text()='TR-001']]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Clear Transfer
-    VerifyText         Cleared                        anchor=TR-001
-
-Verify Prevention Of Clearing Invalid Invoice Transfers
-    [Documentation]    Verify invalid invoice transfers cannot be cleared when the transfer is incomplete, already cleared, reversed, or financially inconsistent.
-    [Tags]             Negative
-    ClickText          PayExed
-    ClickText          Invoice Transfers
-    ClickElement       xpath=//tr[.//td[text()='TR-CLEARED']]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Clear Transfer
-    VerifyText         Transfer has already been cleared or is invalid.
-
-Verify Sequential Clearing Of Multiple Invoice Transfers
-    [Documentation]    Verify multiple invoice transfers can be cleared in the correct sequence without creating balance discrepancies.
-    ClickText          PayExed
-    ClickText          Invoice Transfers
-    ClickText          Clear All Pending In Sequence
-    VerifyText         All pending transfers cleared successfully.
-
-# ==============================================================================
-# SECTION 8: FINANCIAL RECONCILIATION, PERMISSIONS & AUDIT TRAIL
-# ==============================================================================
-
-Verify Financial Reconciliation Process
-    [Documentation]    Verify Finance can perform financial reconciliation across enrollment changes, direct payments, refunds, credit transfers, split invoices, and invoice clearing.
-    ClickText          Financial Reconciliation
-    ClickText          Run Reconciliation Batch
-    Sleep              5s
-    VerifyText         Reconciliation Batch Status: Completed
-    VerifyText         Unreconciled Items: 0
-
-Verify Reconciliation Anomaly Reporting
-    [Documentation]    Verify financial reconciliation identifies and reports mismatched, missing, duplicate, or incorrectly allocated transactions.
-    [Tags]             Negative
-    ClickText          Financial Reconciliation
-    ClickText          View Exception Dashboard
-    VerifyText         Mismatched Transactions
-
-Verify Reconciliation Robustness Across Operations
-    [Documentation]    Verify reconciliation remains accurate after successful and failed transactions, partial and full payments/refunds, multiple transfers, and applicable reverts.
-    ClickText          Financial Reconciliation
-    ClickText          Run Comprehensive Ledger Audit
-    VerifyText         Ledger Balances Balanced
-
-Verify Role Based Access Controls And Security
-    [Documentation]    Verify unauthorized users cannot perform program setup, enrollment changes, payments, refunds, credit transfers, invoice splits, clearing, or reconciliation actions outside their assigned permissions.
-    [Tags]             Security
-    SwitchUserTo       Standard Student User
-    ClickText          Programs                       anchor=Home
-    VerifyText         New                            state=absent
-    ClickText          Financial Reconciliation
-    VerifyText         You do not have access to this page.
-
-Verify Audit Trail Capture Across Lifecycle Actions
-    [Documentation]    Verify audit and history records capture all cumulative changes across program setup, enrollment, payments, refunds, credits, invoice splits, transfers, clearing, and reconciliation.
-    ClickText          Programs                       anchor=Home
-    ClickText          Testing1 - September 2026
-    ClickText          PayExed
-    ClickText          History
-    VerifyText         Program Created
-    VerifyText         Enrollment Stage Updated
-    VerifyText         Payment Received
-    VerifyText         Invoice Split Executed
-    VerifyText         Transfer Cleared
-
+Verify Payment of child invoice
