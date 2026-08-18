@@ -250,7 +250,7 @@ Verify a finance request is raised for reverting the Cancellation
 # SECTION 3: DIRECT PAYMENTS (FULL, PARTIAL, METHODS, ERRORS, DUPLICATES)
 # ==============================================================================
 
-Verify Participant Can Make Successful Full Direct Payment
+Verify Participant Can Make Successful Partial Direct Payment through credit card
     [Documentation]    Verify Participant/Payer can make a successful full direct payment and that the invoice, payment, balance, and enrollment status update correctly.
     ClickText          Log out
     OpenBrowser    ${login_url}    chrome
@@ -266,23 +266,32 @@ Verify Participant Can Make Successful Full Direct Payment
     VerifyText    Home
     ClickText     Programs
     ClickText    Search...
-    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
-    TypeText          Search Programs and more...    Testing3     
+    ClickElement     xpath=//input[contains(@placeholder,'Search...')]    
+    TypeText          Search...    Testing3     
     ClickText       Testing3 - September 2026   
     ClickText          PayExed
     ClickText          Testing3-R6449
     ClickElement       xpath=//a[contains(@href,'pay')]
     SwitchWindow       NEW
     ClickText          Make Payment
-    ClickText          Credit Card
-    TypeText           Card Number                    4111111111111111
-    TypeText           CVV                            123
+    ClickText          Payment Amount (USD)
+    TypeText           Payment Amount (USD)          25000
+    TypeText           Card number                    4111111111111111
+    TypeText           Expiration date                    10/29
+    TypeText           Security code                  123
     ClickText          PAY NOW
-    SwitchWindow       1
-    VerifyText         Paid                           anchor=Invoice Status
-    VerifyText         $0.00                          anchor=Remaining Balance
+    VerifyText         Your payment was successful!
+    VerifyText         PAYMENT TRANSACTION
+    Sleep              5s
+    SwitchWindow       2
+    RefreshPage
+    VerifyText         Invoice Status
+    VerifyText         Partially Paid
+    VerifyText         Transaction Payments
+    VerifyText         Invoice Balance
 
-Verify Participant Can Make Successful Partial Direct Payment
+    
+Verify Participant Can Make Successful Partial Direct Payment through Amazon Pay
     [Documentation]    Verify Participant/Payer can make a successful partial direct payment and that the remaining balance is calculated correctly.
     ClickText          PayExed
     ClickElement       xpath=//a[contains(@href,'pay')]
