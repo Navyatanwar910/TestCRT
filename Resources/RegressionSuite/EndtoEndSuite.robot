@@ -252,7 +252,25 @@ Verify a finance request is raised for reverting the Cancellation
 
 Verify Participant Can Make Successful Full Direct Payment
     [Documentation]    Verify Participant/Payer can make a successful full direct payment and that the invoice, payment, balance, and enrollment status update correctly.
+    ClickText          Log out
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5YJXMZKRHI
+    ClickText     Verify
+    VerifyText    Home
+    ClickText     Programs
+    ClickText    Search...
+    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
+    TypeText          Search Programs and more...    Testing3     
+    ClickText       Testing3 - September 2026   
     ClickText          PayExed
+    ClickText          Testing3-R6449
     ClickElement       xpath=//a[contains(@href,'pay')]
     SwitchWindow       NEW
     ClickText          Make Payment
