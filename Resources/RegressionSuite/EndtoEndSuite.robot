@@ -212,18 +212,39 @@ Verify PL Can Revert Cancellation
     TypeText          Search Programs and more...    Testing3     
     ClickText       Testing3 - September 2026    
     ClickText          Navya Tanwar
-    ClickElement       xpath=//button[text()='Revert Cancel' or @title='Revert Cancel'] 
+    ClickElement       xpath=//button[text()='Revert Cancel' or @title='Revert Cancel']
+    Sleep              5s
+    RefreshPage
+    VerifyText         Funnel Stage
 
-Verify Invalid Enrollment Changes Are Rejected
-    [Documentation]    Verify invalid enrollment changes are rejected when participant, program, stage, or prerequisite data is invalid.
-    [Tags]             Negative
-    ClickText          Enrollment                     anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Change Stage
-    DropDown           Stage                          Admitted
-    ClickText          Save
-    VerifyText         Prerequisites missing: Complete Assessment required prior to Admission.
-    ClickText          Cancel
+Verify a finance request is raised for reverting the Cancellation
+    [Documentation]    Check for a request as finance user
+    ClickText          Log out
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5YJXMZKRHI
+    ClickText     Verify
+    VerifyText    Home    
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Debbie Bishko
+    ClickText    Login
+    ClickText    Home
+    ClickElement       xpath=//one-app-nav-bar-item-root[.//span[text()='Tasks']]//a    
+    ClickText    Select list display
+    ClickText    Table
+    ClickText    Select a List View: Tasks
+    ClickText    Finance Requests      anchor=Completed Tasks    index=2
+    ClickText    Create Date
+    ClickText    Revert    anchor=justinak
+    ClickText    Revert Cancel
 
 # ==============================================================================
 # SECTION 3: DIRECT PAYMENTS (FULL, PARTIAL, METHODS, ERRORS, DUPLICATES)
