@@ -355,8 +355,8 @@ Verify Partial Manual Refund Processing with finance user
     ClickText    Testing3 - September 2026    
     ClickText          PayExed
     ClickText          Testing3-R6449
-    ClickElement       xpath=//button[text='Create Payment / refund']
-    VerifyAll
+    ClickElement       xpath=//button[text()='Create Payment / Refund']
+    VerifyText
 Verify Full Manual Refund Processing
     [Documentation]    Verify PL/Finance can process a partial online refund and that only the eligible amount is refunded and the remaining payment balance is correct.
     ClickText          PayExed
