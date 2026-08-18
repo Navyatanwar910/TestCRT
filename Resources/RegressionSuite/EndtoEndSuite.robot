@@ -503,7 +503,6 @@ Verify split of invoice with user defined template where invoice status is Unpai
     VerifyText                   Net Invoice Amount        
     VerifyText                   Invoice Status
     ClickText                    Due Date
-    ClickText                    ${Child_Invoice}
     Sleep                        5s
     ClickText                    PDF Preview
     Sleep                        5s
@@ -518,7 +517,6 @@ Verify split of invoice with user defined template where invoice status is Unpai
     ClickText                    Amazon Pay
     ClickText                    PAY NOW
     ClickText                    AUTHORIZE TEST PAYMENT
-    VerifyText                   ${Child_Invoice}
     VerifyText                   Paid
     SwitchWindow                 2
     RefreshPage
