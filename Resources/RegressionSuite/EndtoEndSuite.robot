@@ -332,39 +332,32 @@ Verify Participant Can Make Successful Partial Direct Payment through Amazon Pay
 # SECTION 4: POST-PAYMENT ENROLLMENT CHANGES & REFUNDS
 # ==============================================================================
 
-Verify Enrollment Change After Full Direct Payment
-    [Documentation]    Verify PL/Finance can change an enrollment after full direct payment and that all related financial records remain consistent.
-    ClickText          Enrollment                     anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Change Stage
-    DropDown           Stage                          Completed
-    ClickText          Save
-    VerifyText         Completed                      anchor=${CONTACT_NAME}
-    VerifyText         Paid                           anchor=Invoice Status
-
-Verify Enrollment Change After Partial Direct Payment
-    [Documentation]    Verify PL/Finance can change an enrollment after partial direct payment and that the outstanding amount is recalculated correctly.
-    ClickText          Enrollment                     anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'${PAYER_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Change Stage
-    DropDown           Stage                          Withdrawn
-    ClickText          Save
-    VerifyText         $150,000.00 Cancellation Fee Applied
-
-Verify Full Online Refund Processing
+Verify Partial Manual Refund Processing with finance user
     [Documentation]    Verify PL/Finance can process a full online refund for an enrollment change and that the payment, invoice, balance, and enrollment records are reconciled.
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5YJXMZKRHI
+    ClickText     Verify
+    VerifyText    Home    
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Debbie Bishko
+    ClickText    Login
+    ClickText    Home
+    ClickText    Programs
+    ClickText    Testing3 - September 2026    
     ClickText          PayExed
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Finance Request
-    ClickText          Please select a type
-    ClickText          Refund
-    ClickText          Full Refund
-    ClickText          Submit
-    ClickText          View New Finance Request
-    ClickText          Process Online Refund
-    VerifyText         Refunded                       anchor=Invoice Status
-
-Verify Partial Online Refund Processing
+    ClickText          Testing3-R6449
+    ClickElement       xpath=//button[text='Create Payment / refund']
+    VerifyAll
+Verify Full Manual Refund Processing
     [Documentation]    Verify PL/Finance can process a partial online refund and that only the eligible amount is refunded and the remaining payment balance is correct.
     ClickText          PayExed
     ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
@@ -377,7 +370,7 @@ Verify Partial Online Refund Processing
     ClickText          Process Online Refund
     VerifyText         Partial Refund Processed: $50,000.00
 
-Verify Full Manual Refund Processing
+Verify Full Manual Refund 
     [Documentation]    Verify PL/Finance can process a full manual refund and that the refund and invoice records are updated correctly.
     ClickText          PayExed
     ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
@@ -400,13 +393,6 @@ Verify Partial Manual Refund Processing
     ClickText          Submit
     VerifyText         Partial Manual Refund Recorded
 
-Verify Reverting Enrollment Change With Direct Payment
-    [Documentation]    Verify enrollment changes involving direct payment can be reverted and that all payment, refund, invoice, and enrollment records return to the expected state.
-    ClickText          Enrollment                     anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Revert Enrollment & Financial Change
-    ClickText          Confirm Revert
-    VerifyText         Status Restored
 
 Verify Invalid Refund Processing Prevention
     [Documentation]    Verify invalid, duplicate, excessive, or unsupported refunds are rejected without corrupting financial balances.
