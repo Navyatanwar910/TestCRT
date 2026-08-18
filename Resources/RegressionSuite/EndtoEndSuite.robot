@@ -46,7 +46,7 @@ Verify Finance Can Create A Valid Program
     ClickText          Open Enrollment
     ClickText          Next
     TypeText           Program Name                   Executive Leadership Cohort 2026
-    TypeText           Acronym                        Testing3
+    TypeText           Acronym                        Testing4
     TypeText           Start Date                     09/01/2026
     TypeText           End Date                       08/31/2027
     TypeText           Program Fee                    200000
@@ -56,13 +56,16 @@ Verify Finance Can Create A Valid Program
     VerifyText         The Program was successfully created!
     ClickText          Finish
     Sleep              5s
-    VerifyText         Testing3 - September 2026
+    VerifyText         Testing4 - September 2026
 
 Verify setting up email template 
     [Documentation]    Test Case created using the QEditor
     
     ClickText          Details    anchor=Content    recognition_mode=vision
     ClickText    Financials    anchor=PayExed
+    ClickText    PTA-Project Number
+    TypeText     PTA-Project Number                 1256
+    DropDown     PTA-Award                        EAFJY
     ClickText    Edit Invoice Template
     ComboBox    Search Invoice Templates...    Standard OE Invoice Template    index=1
     ClickText    Save
@@ -127,8 +130,8 @@ Login as PL
     ClickText    Programs              anchor=Home
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
-    TypeText          Search Programs and more...    Testing3     
-    ClickText       Testing3 - September 2026    
+    TypeText          Search Programs and more...    Testing4     
+    ClickText       Testing4 - September 2026    
 
 Verify Admission of Participant as PL
     [Documentation]    Test Case created using the QEditor
@@ -209,8 +212,8 @@ Verify PL Can Revert Cancellation
     ClickText    Programs              anchor=Home
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
-    TypeText          Search Programs and more...    Testing3     
-    ClickText       Testing3 - September 2026    
+    TypeText          Search Programs and more...    Testing4     
+    ClickText       Testing4 - September 2026    
     ClickText          Navya Tanwar
     ClickElement       xpath=//button[text()='Revert Cancel' or @title='Revert Cancel']
     Sleep              5s
@@ -267,10 +270,10 @@ Verify Participant Can Make Successful Partial Direct Payment through credit car
     ClickText     Programs
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search...')]    
-    TypeText          Search...    Testing3     
-    ClickText       Testing3 - September 2026   
+    TypeText          Search...    Testing4     
+    ClickText       Testing4 - September 2026   
     ClickText          PayExed
-    ClickText          Testing3-R6449
+    ClickText          Testing4-R6450
     ClickElement       xpath=//a[contains(@href,'pay')]
     SwitchWindow       NEW
     ClickText          Make Payment
@@ -352,36 +355,40 @@ Verify Partial Manual Refund Processing with finance user
     ClickText    Login
     ClickText    Home
     ClickText    Programs
-    ClickText    Testing3 - September 2026    
+    ClickText    Testing4 - September 2026    
     ClickText          PayExed
-    ClickText          Testing3-R6449
+    ClickText          Testing4-R6450
     ClickElement       xpath=//*[text()='Create Payment / Refund']
-    VerifyText
-Verify Full Manual Refund Processing
-    [Documentation]    Verify PL/Finance can process a partial online refund and that only the eligible amount is refunded and the remaining payment balance is correct.
-    ClickText          PayExed
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Finance Request
-    ClickText          Please select a type
-    ClickText          Refund
-    TypeText           Refund Amount                  50000
-    ClickText          Submit
-    ClickText          View New Finance Request
-    ClickText          Process Online Refund
-    VerifyText         Partial Refund Processed: $50,000.00
+    UseModal           On
 
+    # Dropdown & Input Selections
+    DropDown       Payment Type                   Refund
+    TypeText           Amount                         2000                     # Adjust refund amount as needed
+    DropDown       Transaction                 PT-2055922 - $24800.00 - Available
+    DropDown       Payment Method                 Credit Card               # Replace with applicable method
+
+    # Form Submission
+    ClickText          Save
+    UseModal           Off
+    
 
 Verify Invalid Refund Processing Prevention
     [Documentation]    Verify invalid, duplicate, excessive, or unsupported refunds are rejected without corrupting financial balances.
     [Tags]             Negative
-    ClickText          PayExed
-    ClickElement       xpath=//tr[.//a[contains(text(),'${CONTACT_NAME}')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText          Finance Request
-    ClickText          Please select a type
-    ClickText          Refund
-    TypeText           Refund Amount                  99999999
-    ClickText          Submit
-    VerifyText         Refund amount exceeds total eligible paid balance.
+    ClickText          Testing3-R6449
+    ClickElement       xpath=//*[text()='Create Payment / Refund']
+    UseModal           On
+
+    # Dropdown & Input Selections
+    DropDown       Payment Type                   Refund
+    TypeText           Amount                         200000                     # Adjust refund amount as needed
+    DropDown       Transaction                 PT-2055922 - $24800.00 - Available
+    DropDown       Payment Method                 Credit Card               # Replace with applicable method
+
+    # Form Submission
+    ClickText          Save
+    UseModal           Off
+    VerifyText         Error
 
 # ==============================================================================
 # SECTION 5: CREDITS & CREDIT TRANSFERS
@@ -414,7 +421,7 @@ Verify Transfer of Participant to another program where the payment made is part
     ClickElement                       xpath=//a[contains(@href,'Transfer')]
     ClickText                        Submit Transfer             anchor=cancel
     ClickText                        Programs
-    ClickText                        Testing3 - September 2026
+    ClickText                        Testing4 - September 2026
     ClickText                        Enrollment                  anchor=Overview
     ClickText                        Transfer 
     ClickText                        AIP 2027  
@@ -443,10 +450,80 @@ Verify Participant is transfer to another program after making full payment of p
     ClickText     Submit Transfer
     ClickText     AIP3 - November 2027
 
-Verify transfer of participant to a program costing less than what is paid by him
-
-Verify Spliting of Paid Invoice
-
 Verify Spliting of Unpaid Invoice
+    ClickText    Programs
+    ClickText    Testing3 0 September 2026
+    ClickText          PayExed
+    ClickText          Testing3-R6449
+    SwitchWindow       NEW
+    ClickText          Split Invoice    recognition_mode=vision
+    UseModal           on
+    Sleep              2s
+    
+Verify Validations on User Defined Split Invoice
+    SetConfig    ShadowDOM    True
+    VerifyText                Amount Validation   
+    VerifyText                  Original Invoice Amount   
+    VerifyText                  Total Split Amount       
+    ClickText                   Add Split   
+    TypeText                    Percent                    50.00%    anchor=Split Type
+    TypeText                    Days                       30        anchor=Due Date Type
+    ScrollTo                     Remove    anchor=Days
+    ClickText                    Add Split
+    ScrollTo                     Remove    anchor=Days
+    Sleep                        5s
+    TypeText                     Percent             40.00%    anchor=Remove
+    TypeText                     Days                20        anchor=Remove
+    VerifyText                   Validation Errors
+    Sleep                        5s    
+    ClickText                    Cancel              anchor=Submit
 
-Verify Payment of child invoice
+Verify split of invoice with user defined template where invoice status is Unpaid and split is based on Percentage
+    [Documentation]    Template based
+
+    Sleep              2s
+    ClickText          Split Invoice    recognition_mode=vision
+    UseModal           on
+    Sleep              2s
+    SetConfig          ShadowDOM    True       
+    ClickText                   Add Split   
+    TypeText                    Percent                    60.00%    anchor=Split Type
+    TypeText                    Days                       30        anchor=Due Date Type
+    ScrollTo                     Remove    anchor=Days
+    ClickText                    Add Split
+    ScrollTo                     Remove    anchor=Days
+    Sleep                        5s
+    TypeText                     Percent             40.00%    anchor=Remove
+    TypeText                     Days                20        anchor=Remove
+    Sleep                        5s    
+    ClickText                    Submit                anchor=Cancel
+    Sleep                        5s
+    ScrollTo                     Child Invoices
+    VerifyText                   Invoice Number
+    VerifyText                   Net Invoice Amount        
+    VerifyText                   Invoice Status
+    ClickText                    Due Date
+    ClickText                    ${Child_Invoice}
+    Sleep                        5s
+    ClickText                    PDF Preview
+    Sleep                        5s
+    ClickText                    Details
+    VerifyText                   Invoice Status
+    VerifyText                   Unpaid
+    VerifyText                   Due Date
+    ClickElement                 xpath=//a[text()='Pay']
+    SwitchWindow                 NEW
+    ClickText                    Make Payment
+    Sleep                        5s
+    ClickText                    Amazon Pay
+    ClickText                    PAY NOW
+    ClickText                    AUTHORIZE TEST PAYMENT
+    VerifyText                   ${Child_Invoice}
+    VerifyText                   Paid
+    SwitchWindow                 2
+    RefreshPage
+    VerifyText                   Invoice Status
+    VerifyText                   Paid
+    ClickElement                 xpath=//span[text()='Parent Invoice']/following::a[1]
+    VerifyText                   Invoice Status
+    VerifyText                   Partially Paid
