@@ -16,9 +16,21 @@ ${TRANSFER_COURSE}        AIP 2026
 
 *** Test Cases ***
 
+Login To Salesforce Instance
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    ARN9BS91X8
+    ClickText     Verify
+    VerifyText    Home
+
 Login as Finance User
-    [Documentation]    login in Salesforce
-    Login To Salesforce  
+    [Documentation]    login in Salesforce  
     ClickText    Setup
     ClickText    Opens in a new tab
     SwitchWindow    NEW
