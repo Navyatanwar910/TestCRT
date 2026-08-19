@@ -9,7 +9,6 @@ Suite Teardown          Close All Browsers
 *** Variables ***
 ${INVALID_ACRONYM}        ABCDFRGT123456BGRTiqn2112
 ${CONTACT_NAME}           Navya Tanwar
-${TRANSFER_COURSE}        AIP 2026
 
 *** Test Cases ***
 
@@ -310,24 +309,126 @@ Login as Finance User to check for finance requests and create a manual Payment
     VerifyText         Cancel                        anchor=Funnel Stage
     Sleep              5s
 
+    ClickText                        Financials                  anchor=Logistics   
+    VerifyText                       Credit Balance
+    Sleep                        10s
+Verify PL Can Revert Cancellation
+    [Documentation]    Verify PL can revert an enrollment change without payment and that all related records return to their previous valid state.
+    ClickText          Log out
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5VKQODUZSH
+    ClickText     Verify
+    VerifyText    Home
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Justina Kayastha
+    ClickText    Login
+    ClickText    Programs              anchor=Home
+    ClickText    Search...
+    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
+    TypeText          Search Programs and more...    ${Acronym}     
+    ClickText         ${Acronym} - September 2026    
+    ClickText          Navya Tanwar
+    ClickElement       xpath=//button[text()='Revert Cancel' or @title='Revert Cancel']
+    Sleep              5s
+    RefreshPage
+    VerifyText         Funnel Stage
+
+Verify a finance request is raised for reverting the Cancellation
+    [Documentation]    Check for a request as finance user
+    ClickText          Log out
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5VKQODUZSH
+    ClickText     Verify
+    VerifyText    Home    
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Debbie Bishko
+    ClickText    Login
+    ClickText    Home
+    ClickElement       xpath=//one-app-nav-bar-item-root[.//span[text()='Tasks']]//a    
+    ClickText    Select list display
+    ClickText    Table
+    ClickText    Select a List View: Tasks
+    ClickText    Finance Requests      anchor=Completed Tasks    index=2
+    ClickText    Create Date
+    Sleep        10s
+    ClickText    Revert Cancel         anchor=Action
+    VerifyText                        Action has been performed
+    Sleep        10s
+    ClickText          Log out
 Verify Transfer of a participant beforing admitting to another program
-    ClickText    ${Acronym}    anchor=Program
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5VKQODUZSH
+    ClickText     Verify
+    VerifyText    Home
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Justina Kayastha
+    ClickText    Login
+    ClickText    Programs              anchor=Home
+    ClickText    Search...
+    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
+    TypeText          Search Programs and more...    ${Acronym}     
+    ClickText         ${Acronym} - September 2026 
     ClickText    Overview
     ClickText    New
     ClickText    Contact    partial_match=False
-    TypeText    Search for a contact...    Aditya
-    ClickText                        Aditya Agarwal
+    TypeText    Search for a contact...    Aaditya
+    ClickText                        Aaditya Raut
     ClickText    Stage
     ClickText    Pending                   recognition_mode=vision
     ClickText    Save
     ClickText    Enrollment                anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'Aditya Agarwal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickElement       xpath=//tr[.//a[contains(text(),'Aaditya Raut')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText          Transfer            anchor=Preselect Discount               
     TypeText    Search for a course...    Testing2\n    anchor=To Course
     ClickText    Testing2 2026 | Sep 1, 2026 - Aug 31, 2027 | Executive Leadership Cohort 2026 
     TypeText     Please provide detailed information about your request...     test
     ClickText    Submit
 
+    ClickText          Log out
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5VKQODUZSH
+    ClickText     Verify
+    VerifyText    Home    
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Debbie Bishko
+    ClickText    Login
+    ClickText    Home
     ClickElement       xpath=//one-app-nav-bar-item-root[.//span[text()='Tasks']]//a    
     ClickText    Select list display
     ClickText    Table
@@ -339,8 +440,28 @@ Verify Transfer of a participant beforing admitting to another program
     Sleep                        5s 
     
 Verify Split of an Invoice and Payment of Child Invoice
-    ClickText    ${Acronym}    anchor= From Program
-    SwitchWindow               NEW
+
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5VKQODUZSH
+    ClickText     Verify
+    VerifyText    Home
+    ClickText    Setup
+    ClickText    Opens in a new tab
+    SwitchWindow    NEW
+    ClickText    Justina Kayastha
+    ClickText    Login
+    ClickText    Programs              anchor=Home
+    ClickText    Search...
+    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
+    TypeText          Search Programs and more...    ${Acronym}     
+    ClickText         ${Acronym} - September 2026
     ClickText    Overview
     ClickText    New
     ClickText    Contact    partial_match=False
@@ -360,20 +481,6 @@ Verify Split of an Invoice and Payment of Child Invoice
 
 Verify Split Invoice as PL
 
-    ClickText          Log out
-    OpenBrowser    ${login_url}    chrome
-    VerifyText    Salesforce login
-    TypeText      Username         ${username_Admin}
-    ClickText     Log In to Sandbox
-    VerifyText    Password
-    TypeSecret    Password    ${password_Admin}
-    ClickText     Log In to Sandbox
-    VerifyText    Verify Your Identity
-    TypeText      Verification Code    5VKQODUZSH
-    ClickText     Verify
-    VerifyText    Home
-    ClickText    Programs              anchor=Home
-    ClickText    ${Acronym}
     ClickText       PayExed                anchor=Enrollment
     ClickElement       xpath=//a[starts-with(text(),'ACR-')]
     SwitchWindow       NEW
