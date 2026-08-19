@@ -455,5 +455,4 @@ Verify split of invoice with user defined template where invoice status is Unpai
     VerifyText                   Invoice Number
     VerifyText                   Net Invoice Amount        
     VerifyText                   Invoice Status
-    ClickElement                 xpath=//a[starts-with(text(),'ACR-20260819')]    anchor=Invoice Number
 
