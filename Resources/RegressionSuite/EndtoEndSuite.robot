@@ -71,10 +71,14 @@ Verify Finance Can Create A Valid Program
 Verify setting up email template 
     [Documentation]    Test Case created using the QEditor
     
+    # Generate random 4-digit number
+    ${PROJECT_NUM}=    Evaluate    random.randint(1000, 9999)    modules=random
+    Set Suite Variable             ${PROJECT_NUM}
+    
     ClickText          Details    anchor=Content    recognition_mode=vision
     ClickText    Financials    anchor=OE
     ClickText    Edit PTA-Project Number
-    TypeText     PTA-Project Number                 1256
+    TypeText     PTA-Project Number                 ${PROJECT_NUM}
     ClickText          --None--                       anchor=PTA-Award
     ClickText          EAFJY
     ComboBox    Search Invoice Templates...    Standard OE Invoice Template    index=1
