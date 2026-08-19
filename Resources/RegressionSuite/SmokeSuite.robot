@@ -333,8 +333,8 @@ Verify PL Can Revert Cancellation
     ClickText    Login
     ClickText    Programs              anchor=Home
     ClickText    Search...
-    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
-    TypeText          Search Programs and more...    ${Acronym}     
+    ClickElement     xpath=//input[contains(@placeholder,'Search...')]    
+    TypeText          Search...    ${Acronym}     
     ClickText         ${Acronym} - September 2026    
     ClickText          Navya Tanwar
     ClickElement       xpath=//button[text()='Revert Cancel' or @title='Revert Cancel']
@@ -424,7 +424,7 @@ Verify Split Invoice as PL
     ClickElement       xpath=//a[starts-with(text(),'ACR-')]
     SwitchWindow       NEW
     Sleep              5s          
-    ClickText          Split Invoice       
+    ClickText          Split Invoice       anchor=Generate PDF       
     Sleep              2s
     
 Verify Validations on User Defined Split Invoice
