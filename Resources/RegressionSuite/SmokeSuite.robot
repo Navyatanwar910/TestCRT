@@ -270,16 +270,16 @@ Login as Finance User to check for finance requests and create a manual Payment
     
     # Form Submission
     ClickElement       xpath=//button[@name='SaveEdit' or text()='Save'] 
-    VerifyText         Refund Amount cannot exceed the original transaction amount  
     Sleep              5s 
     TypeText           Amount                         100000                     # Adjust refund amount as needed 
+    ClickElement       xpath=//button[@name='SaveEdit' or text()='Save'] 
     UseModal           Off
     VerifyText         Secure Public Id
     ClickText          ACR-                        anchor=Invoice              partial_match=True    
     VerifyText         Invoice Status
     VerifyText         Paid
     VerifyText         Invoice Balance
-    ScrollTo           Transactions
+    ScrollTo           Child Invoices
     VerifyText         Transaction Number             anchor=Transactions
     Sleep              5s 
 
@@ -290,6 +290,162 @@ Login as Finance User to check for finance requests and create a manual Payment
     ClickText    Finance Requests      anchor=Completed Tasks    index=2
     ClickText    Create Date
     ClickText    Financial Request - Cancel    anchor=justinak
-    ClickText    Cancel+Refund                 anchor=Action
+    ClickText    Cancel + Refund                 anchor=Action
     ClickText    Submit Cancellation           recognition_mode=vision
     Sleep        5s
+    ClickElement                        xpath=//a[starts-with(text(),'ACR-')]    anchor=Invoice Number
+    SwitchWindow                        NEW
+    VerifyText                        Invoice Status
+    VerifyText                        Cancelled
+    VerifyText                        Invoice Balance
+    VerifyText                        Credit Balance
+    Sleep                        10s
+    ScrollTo                        Child Invoices
+    VerifyText                      Transaction Type                        anchor=Transactions
+    VerifyText                      Refund
+    Sleep                        5s 
+    ScrollTo                     PDF Preview
+    ClickText          Navya Tanwar                   anchor=Program Member                        
+    VerifyText         Funnel Stage
+    VerifyText         Cancel                        anchor=Funnel Stage
+    Sleep              5s
+
+Verify Transfer of a participant beforing admitting to another program
+    ClickText    ${Acronym}    anchor=Program
+    ClickText    Overview
+    ClickText    New
+    ClickText    Contact    partial_match=False
+    TypeText    Search for a contact...    Aditya
+    ClickText                        Aditya Agarwal
+    ClickText    Stage
+    ClickText    Pending                   recognition_mode=vision
+    ClickText    Save
+    ClickText    Enrollment                anchor=Overview
+    ClickElement       xpath=//tr[.//a[contains(text(),'Aditya Agarwal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText          Transfer            anchor=Preselect Discount               
+    TypeText    Search for a course...    Testing2\n    anchor=To Course
+    ClickText    Testing2 2026 | Sep 1, 2026 - Aug 31, 2027 | Executive Leadership Cohort 2026 
+    TypeText     Please provide detailed information about your request...     test
+    ClickText    Submit
+
+    ClickElement       xpath=//one-app-nav-bar-item-root[.//span[text()='Tasks']]//a    
+    ClickText    Select list display
+    ClickText    Table
+    ClickText    Select a List View: Tasks
+    ClickText    Finance Requests      anchor=Completed Tasks    index=2
+    ClickText    Create Date
+    ClickText    Financial Request - Transfer 
+    VerifyText                        Action has been performed 
+    Sleep                        5s 
+    
+Verify Split of an Invoice and Payment of Child Invoice
+    ClickText    ${Acronym}    anchor= From Program
+    SwitchWindow               NEW
+    ClickText    Overview
+    ClickText    New
+    ClickText    Contact    partial_match=False
+    TypeText    Search for a contact...    Anjali
+    ClickText                        Anjali Kotawala
+    ClickText    Stage
+    ClickText    Pending                   recognition_mode=vision
+    ClickText    Save
+    ClickText    Enrollment                anchor=Overview
+    ClickText        Pending | Applicant
+    ClickElement    xpath=//tr[.//a[contains(text(),'Anjali Kotawala')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText       Admit with Invoice and Email
+    ClickText       Select Email Template
+    ClickText       Admit - On Campus
+    ClickText       Send Email(s)
+    Sleep           5s
+
+Verify Split Invoice as PL
+
+    ClickText          Log out
+    OpenBrowser    ${login_url}    chrome
+    VerifyText    Salesforce login
+    TypeText      Username         ${username_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Password
+    TypeSecret    Password    ${password_Admin}
+    ClickText     Log In to Sandbox
+    VerifyText    Verify Your Identity
+    TypeText      Verification Code    5VKQODUZSH
+    ClickText     Verify
+    VerifyText    Home
+    ClickText    Programs              anchor=Home
+    ClickText    ${Acronym}
+    ClickText       PayExed                anchor=Enrollment
+    ClickElement       xpath=//a[starts-with(text(),'ACR-')]
+    SwitchWindow       NEW
+    Sleep              2s          
+    ClickText          Split Invoice       recognition_mode=vision    anchor=Generate PDF
+    UseModal           on
+    Sleep              2s
+    
+Verify Validations on User Defined Split Invoice
+    SetConfig    ShadowDOM    True
+    VerifyText                Amount Validation   
+    VerifyText                  Original Invoice Amount   
+    VerifyText                  Total Split Amount       
+    ClickText                   Add Split   
+    TypeText                    Percent                    50.00%    anchor=Split Type
+    TypeText                    Days                       30        anchor=Due Date Type
+    ScrollTo                     Remove    anchor=Days
+    ClickText                    Add Split
+    ScrollTo                     Remove    anchor=Days
+    Sleep                        5s
+    TypeText                     Percent             40.00%    anchor=Remove
+    TypeText                     Days                20        anchor=Remove
+    VerifyText                   Validation Errors
+    Sleep                        5s    
+    ClickText                    Cancel              anchor=Submit
+
+Verify split of invoice with user defined template where invoice status is Unpaid and split is based on Percentage
+    [Documentation]    Template based
+
+    Sleep              2s
+    ClickText          Split Invoice    recognition_mode=vision
+    UseModal           on
+    Sleep              2s
+    SetConfig          ShadowDOM    True       
+    ClickText                   Add Split   
+    TypeText                    Percent                    60.00%    anchor=Split Type
+    TypeText                    Days                       30        anchor=Due Date Type
+    ScrollTo                     Remove    anchor=Days
+    ClickText                    Add Split
+    ScrollTo                     Remove    anchor=Days
+    Sleep                        5s
+    TypeText                     Percent             40.00%    anchor=Remove
+    TypeText                     Days                20        anchor=Remove
+    Sleep                        5s    
+    ClickText                    Submit                anchor=Cancel
+    Sleep                        5s
+    ScrollTo                     Child Invoices
+    VerifyText                   Invoice Number
+    VerifyText                   Net Invoice Amount        
+    VerifyText                   Invoice Status
+    ClickText                    Due Date
+    ClickText                    ${Child_Invoice}
+    Sleep                        5s
+    ClickText                    PDF Preview
+    Sleep                        5s
+    ClickText                    Details
+    VerifyText                   Invoice Status
+    VerifyText                   Unpaid
+    VerifyText                   Due Date
+    ClickElement                 xpath=//a[text()='Pay']
+    SwitchWindow                 NEW
+    ClickText                    Make Payment
+    Sleep                        5s
+    ClickText                    Amazon Pay
+    ClickText                    PAY NOW
+    ClickText                    AUTHORIZE TEST PAYMENT
+    VerifyText                   ${Child_Invoice}
+    VerifyText                   Paid
+    SwitchWindow                 2
+    RefreshPage
+    VerifyText                   Invoice Status
+    VerifyText                   Paid
+    ClickElement                 xpath=//span[text()='Parent Invoice']/following::a[1]
+    VerifyText                   Invoice Status
+    VerifyText                   Partially Paid
