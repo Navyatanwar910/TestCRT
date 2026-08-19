@@ -166,8 +166,8 @@ Verify Cancellation request as PL
     VerifyText         Fee Payer(s):
     ClickText          Please select a type
     ClickText          Cancel
-#  ClickText          Refund Amount
-#   TypeText           Refund Amount                      20000
+    ClickText          Refund Amount
+    TypeText           Refund Amount                      20000
     ClickText          Comments
     TypeText           Comments                        Cancel
     ClickText          Submit
@@ -263,7 +263,7 @@ Verify a finance request is raised for reverting the Cancellation
     ClickText    Finance Requests      anchor=Completed Tasks    index=2
     ClickText    Create Date
     Sleep        10s
-    ClickText    Revert Cancel         index=1
+    ClickText    Revert Cancel         anchor=Action
     VerifyText                        Action has been performed
     Sleep        10s
     ClickText          Log out
@@ -429,8 +429,8 @@ Verify Transfer of Participant to another program where the payment made is part
     ClickText          Finance Request
     ClickText          Please select a type    anchor=Request Type:
     ClickText    Transfer               
-    TypeText    Search for a course...    AIP\n    anchor=To Course
-    ClickText    AIP 2027 
+    TypeText    Search for a course...    Testing2\n    anchor=To Course
+    ClickText    Testing2 - September 2026 
     TypeText     Please provide detailed information about your request...     test
     ClickText    Submit
 
