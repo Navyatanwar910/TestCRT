@@ -379,14 +379,14 @@ Verify Transfer of a participant beforing admitting to another program
     ClickText    Overview
     ClickText    New
     ClickText    Contact    partial_match=False
-    TypeText    Search for a contact...    A. C. Hubbard
-    ClickText                        A. C. Hubbard
+    TypeText    Search for a contact...    Adam Jonathan Jackson
+    ClickText                        Adam Jonathan Jackson
     ClickText    Stage
     ClickText    Select an Option
     ClickText    Pending                   recognition_mode=vision
     ClickText    Save
     ClickText    Enrollment                anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'A. C. Hubbard')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickElement       xpath=//tr[.//a[contains(text(),'Adam Jonathan Jackson')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText          Transfer            anchor=Preselect Discount               
     TypeText    Search for a course...    Testing2\n    anchor=To Course
     ClickText    Testing2 2026 | Sep 1, 2026 - Aug 31, 2027 | Executive Leadership Cohort 2026 
@@ -398,7 +398,7 @@ Verify Transfer of a participant beforing admitting to another program
     ClickText                        Testing2 2026  
     SwitchWindow                     NEW
     ClickText                        Enrollment                        anchor=Overview
-    VerifyText                       A. C. Hubbard
+    VerifyText                       Adam Jonathan Jackson
     Sleep                        2s
     
 Verify Split of an Invoice and Payment of Child Invoice
