@@ -142,7 +142,7 @@ Login as PL
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
     TypeText          Search Programs and more...    ${Acronym}     
-    ClickText       ${Acronym} - September 2026 - September 2026    
+    ClickText       ${Acronym} - September 2026   recognition_mode=vision   
 
 Verify Admission of Participant as PL
     [Documentation]    Test Case created using the QEditor
