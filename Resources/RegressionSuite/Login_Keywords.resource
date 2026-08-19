@@ -3,7 +3,8 @@ Documentation    Shared login keywords for Salesforce sandbox
 Library          QForce
 
 *** Keywords ***
-Login To Salesforce
+    Login To Salesforce
+
     OpenBrowser    ${login_url}    chrome
     VerifyText    Salesforce login
     TypeText      Username         ${username_Admin}
