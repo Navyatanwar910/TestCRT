@@ -142,7 +142,7 @@ Login as PL
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
     TypeText          Search Programs and more...    ${Acronym}     
-    ClickText       ${Acronym} - September 2026   recognition_mode=vision   
+    ClickText       ${Acronym} - September 2026  
 
 Verify Admission of Participant as PL
     [Documentation]    Test Case created using the QEditor
@@ -173,7 +173,7 @@ Verify Cancellation request as PL
 
 Login as Finance User to check for finance requests
     [Documentation]    Test Case created using the QEditor
-    ClickText          logout
+    ClickText          Log out
     OpenBrowser    ${login_url}    chrome
     VerifyText    Salesforce login
     TypeText      Username         ${username_Admin}
@@ -257,15 +257,20 @@ Verify a finance request is raised for reverting the Cancellation
     ClickText    Select a List View: Tasks
     ClickText    Finance Requests      anchor=Completed Tasks    index=2
     ClickText    Create Date
+    Sleep        10s
     ClickText    Revert    anchor=justinak
-    ClickText    Revert Cancel
-
+    Sleep        10s
 # ==============================================================================
 # SECTION 3: DIRECT PAYMENTS (FULL, PARTIAL, METHODS, ERRORS, DUPLICATES)
 # ==============================================================================
 
 Verify Participant Can Make Successful Partial Direct Payment through credit card
     [Documentation]    Verify Participant/Payer can make a successful full direct payment and that the invoice, payment, balance, and enrollment status update correctly.
+    
+    ${timestamp}=      Get Current Date               result_format=%Y%m%d-%H
+    ${InvoiceNum}=        Set Variable                ACR-{timestamp}
+    Set Suite Variable    ${InvoiceNum}
+
     ClickText          Log out
     OpenBrowser    ${login_url}    chrome
     VerifyText    Salesforce login
@@ -284,7 +289,8 @@ Verify Participant Can Make Successful Partial Direct Payment through credit car
     TypeText          Search...    ${Acronym}     
     ClickText       ${Acronym} - September 2026   
     ClickText          PayExed
-    ClickText          ${Acronym}-R6450
+    ClickElement       xpath=//a[contains(@href,'${InvoiceNum}')]      anchor=${CONTACT_NAME}
+    VerifyText
     ClickElement       xpath=//a[contains(@href,'pay')]
     SwitchWindow       NEW
     ClickText          Make Payment
