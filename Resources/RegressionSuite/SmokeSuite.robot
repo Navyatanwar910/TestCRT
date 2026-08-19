@@ -263,8 +263,8 @@ Login as Finance User to check for finance requests and create a manual Payment
     ClickText          Refund          anchor=Payment
     ClickText          --None--                       anchor=Payment Method
     ClickText          Credit Card                    anchor=ACH/Wire
-    ClickText          --None--                       anchor=Transaction
-    ClickElement       xpath=//span[starts-with(text(),'PT-')][1]
+  #  ClickText          --None--                       anchor=Transaction
+  #  ClickElement       xpath=//span[starts-with(text(),'PT-')][1]
     TypeText           Amount                         1000000                     # Adjust refund amount as needed
     
     # Form Submission
@@ -368,33 +368,38 @@ Verify a finance request is raised for reverting the Cancellation
     ClickText    Select a List View: Tasks
     ClickText    Finance Requests      anchor=Completed Tasks    index=2
     ClickText    Create Date
-    Sleep        10s
+    Sleep        2s
     ClickText    Revert Cancel         anchor=Action
-    Sleep        10s
+    Sleep        5s
     
 Verify Transfer of a participant beforing admitting to another program
  
-    ClickText    Programs              anchor=Home
-    ClickText    Search...
-    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
-    TypeText          Search Programs and more...    ${Acronym}     
+    ClickText    Programs              anchor=Home   
     ClickText         ${Acronym} - September 2026 
     ClickText    Overview
     ClickText    New
     ClickText    Contact    partial_match=False
-    TypeText    Search for a contact...    A. Jahreis
-    ClickText                        A. Jahreis
+    TypeText    Search for a contact...    A. C. Hubbard
+    ClickText                        A. C. Hubbard
     ClickText    Stage
+    ClickText    Select an Option
     ClickText    Pending                   recognition_mode=vision
     ClickText    Save
     ClickText    Enrollment                anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'A. Jahreis')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickElement       xpath=//tr[.//a[contains(text(),'A. C. Hubbard')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText          Transfer            anchor=Preselect Discount               
     TypeText    Search for a course...    Testing2\n    anchor=To Course
     ClickText    Testing2 2026 | Sep 1, 2026 - Aug 31, 2027 | Executive Leadership Cohort 2026 
     TypeText     Please provide detailed information about your request...     test
     ClickText    Submit
-     
+    Sleep        5s 
+    ClickText                        Transfer 
+    Sleep                        2s
+    ClickText                        Testing2 2026  
+    SwitchWindow                     NEW
+    ClickText                        Enrollment                        anchor=Overview
+    VerifyText                       A. C. Hubbard
+    Sleep                        2s
     
 Verify Split of an Invoice and Payment of Child Invoice
     ClickText    Log out
@@ -409,20 +414,17 @@ Verify Split of an Invoice and Payment of Child Invoice
     TypeText      Verification Code    5VKQODUZSH
     ClickText     Verify
     VerifyText    Home
-    ClickText    Programs              anchor=Home
-    ClickText    Search...
-    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
-    TypeText          Search Programs and more...    ${Acronym}     
+    ClickText    Programs              anchor=Home  
     ClickText         ${Acronym} - September 2026
     ClickText    Overview
+
 Verify Split Invoice as PL
 
     ClickText       PayExed                anchor=Enrollment
     ClickElement       xpath=//a[starts-with(text(),'ACR-')]
     SwitchWindow       NEW
-    Sleep              2s          
-    ClickText          Split Invoice       recognition_mode=vision    anchor=Generate PDF
-    UseModal           on
+    Sleep              5s          
+    ClickText          Split Invoice       
     Sleep              2s
     
 Verify Validations on User Defined Split Invoice
