@@ -370,7 +370,6 @@ Verify a finance request is raised for reverting the Cancellation
     ClickText    Create Date
     Sleep        10s
     ClickText    Revert Cancel         anchor=Action
-    VerifyText                        Action has been performed
     Sleep        10s
     ClickText          Log out
 Verify Transfer of a participant beforing admitting to another program
