@@ -4,6 +4,7 @@ Documentation           New test suite
 Library                 QForce
 Suite Setup             Open Browser    https://gsbexeced--full.sandbox.lightning.force.com    chrome
 Suite Teardown          Close All Browsers
+Resource    ../Login_Keywords.resource
 
 *** Variables ***
 ${VALID_ACRONYM}          ABCDFRGT123456BGRTiqn21
@@ -17,17 +18,7 @@ ${TRANSFER_COURSE}        AIP 2026
 
 Login as Finance User
     [Documentation]    login in Salesforce
-    OpenBrowser    ${login_url}    chrome
-    VerifyText    Salesforce login
-    TypeText      Username         ${username_Admin}
-    ClickText     Log In to Sandbox
-    VerifyText    Password
-    TypeSecret    Password    ${password_Admin}
-    ClickText     Log In to Sandbox
-    VerifyText    Verify Your Identity
-    TypeText      Verification Code    5YJXMZKRHI
-    ClickText     Verify
-    VerifyText    Home    
+    Login To Salesforce  
     ClickText    Setup
     ClickText    Opens in a new tab
     SwitchWindow    NEW
