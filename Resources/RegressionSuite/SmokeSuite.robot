@@ -111,7 +111,7 @@ Verify Program Creation Prevention On Invalid Data
     VerifyText         Acronym length should not exceed 25 characters
     VerifyText         End Date and must be on or after Start Date.
     VerifyText         End Date is required and must be on or after Start Date.
-    Sleep              5s
+    Sleep              2s
     ClickText          Cancel
 
 # SECTION 2: ENROLLMENT CHANGES & REVERTS (NO PAYMENT)
@@ -382,13 +382,13 @@ Verify Transfer of a participant beforing admitting to another program
     ClickText    Overview
     ClickText    New
     ClickText    Contact    partial_match=False
-    TypeText    Search for a contact...    Aaditya
-    ClickText                        Aaditya Raut
+    TypeText    Search for a contact...    A. Jahreis
+    ClickText                        A. Jahreis
     ClickText    Stage
     ClickText    Pending                   recognition_mode=vision
     ClickText    Save
     ClickText    Enrollment                anchor=Overview
-    ClickElement       xpath=//tr[.//a[contains(text(),'Aaditya Raut')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickElement       xpath=//tr[.//a[contains(text(),'A. Jahreis')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText          Transfer            anchor=Preselect Discount               
     TypeText    Search for a course...    Testing2\n    anchor=To Course
     ClickText    Testing2 2026 | Sep 1, 2026 - Aug 31, 2027 | Executive Leadership Cohort 2026 
