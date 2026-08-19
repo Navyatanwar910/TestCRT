@@ -141,15 +141,16 @@ Login as PL
     SwitchWindow    NEW
     ClickText    Justina Kayastha
     ClickText    Login
-    ClickText    Programs              anchor=Home
-    ClickText    Search...
-    ClickElement     xpath=//input[contains(@placeholder,'Search...')]    
-    TypeText          Search...    ${Acronym}     
-    ClickText       ${Acronym} - September 2026  
+    ClickText    Home
+    
 
 Verify Admission of Participant as PL
     [Documentation]    Test Case created using the QEditor
-    
+    ClickText    Programs              anchor=Home
+    ClickText    Search...
+    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
+    TypeText          Search Programs and more...    ${Acronym}     
+    ClickText       ${Acronym} - September 2026 
     ClickText          Enrollment    anchor=Overview
     ClickText          Pending | Applicant
     ClickElement       xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
