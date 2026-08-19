@@ -1,5 +1,6 @@
 *** Settings ***
-Library    QForce
+Documentation    Shared login keywords for Salesforce sandbox
+Library          QForce
 
 *** Keywords ***
 Login To Salesforce
