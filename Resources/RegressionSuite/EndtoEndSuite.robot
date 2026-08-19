@@ -8,7 +8,6 @@ Suite Teardown          Close All Browsers
 Resource    Login_Keywords.resource
 
 *** Variables ***
-${VALID_ACRONYM}          ABCDFRGT123456BGRTiqn21
 ${INVALID_ACRONYM}        ABCDFRGT123456BGRTiqn2112
 ${CONTACT_NAME}           Navya Tanwar
 ${PAYER_NAME}             Diana Brown
