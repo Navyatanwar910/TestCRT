@@ -260,18 +260,13 @@ Verify a finance request is raised for reverting the Cancellation
     Sleep        10s
     ClickText    Revert    anchor=justinak
     Sleep        10s
+    ClickText          Log out
 # ==============================================================================
 # SECTION 3: DIRECT PAYMENTS (FULL, PARTIAL, METHODS, ERRORS, DUPLICATES)
 # ==============================================================================
 
 Verify Participant Can Make Successful Partial Direct Payment through credit card
     [Documentation]    Verify Participant/Payer can make a successful full direct payment and that the invoice, payment, balance, and enrollment status update correctly.
-    
-    ${timestamp}=      Get Current Date               result_format=%Y%m%d-%H
-    ${InvoiceNum}=        Set Variable                ACR-{timestamp}
-    Set Suite Variable    ${InvoiceNum}
-
-    ClickText          Log out
     OpenBrowser    ${login_url}    chrome
     VerifyText    Salesforce login
     TypeText      Username         ${username_Admin}
@@ -286,13 +281,13 @@ Verify Participant Can Make Successful Partial Direct Payment through credit car
     ClickText     Programs
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search...')]    
-    TypeText          Search...    ${Acronym}     
-    ClickText       ${Acronym} - September 2026   
+    TypeText          Search...        ${Acronym}     
+    ClickText         ${Acronym} - September 2026   
     ClickText          PayExed
-    ClickElement       xpath=//a[contains(@href,'${InvoiceNum}')]      anchor=${CONTACT_NAME}
-    VerifyText
+    ClickElement       xpath=//a[starts-with(text(),'ACR-')]
+    Sleep              5s
     ClickElement       xpath=//a[contains(@href,'pay')]
-    SwitchWindow       NEW
+    SwitchWindow       New
     ClickText          Make Payment
     ClickText          Payment Amount (USD)
     TypeText           Payment Amount (USD)          25000
