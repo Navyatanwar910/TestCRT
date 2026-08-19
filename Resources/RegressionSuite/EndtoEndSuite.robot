@@ -46,8 +46,10 @@ Verify Finance Can Create A Valid Program
 
 # Generate timestamp and dynamic program name at runtime
     ${timestamp}=      Get Current Date               result_format=%Y%m%d-%H%M%S
-    ${PROGRAM_NAME}=   Set Variable                   OECT-Auto-${timestamp}
+    ${PROGRAM_NAME}=   Set Variable                   Program-Auto-${timestamp}
+    ${Acronym}=        Set Variable                   Acronym-Auto-${timestamp}
     Set Suite Variable    ${PROGRAM_NAME}
+    Set Suite Variable    ${Acronym}
 
     ClickText          Programs                       anchor=Home
     ClickElement       xpath=//a[@title='New']
@@ -55,7 +57,7 @@ Verify Finance Can Create A Valid Program
     ClickText          Open Enrollment
     ClickText          Next
     TypeText           Program Name                   ${PROGRAM_NAME}
-    TypeText           Acronym                        Testing4
+    TypeText           Acronym                        ${Acronym}
     TypeText           Start Date                     09/01/2026
     TypeText           End Date                       08/31/2027
     TypeText           Program Fee                    200000
@@ -65,7 +67,7 @@ Verify Finance Can Create A Valid Program
     VerifyText         The Program was successfully created!
     ClickText          Finish
     Sleep              5s
-    VerifyText         Testing4 - September 2026
+    VerifyText         ${Acronym} - September 2026
 
 Verify setting up email template 
     [Documentation]    Test Case created using the QEditor
@@ -89,7 +91,7 @@ Verify Creation of Participant
     ClickText    New
     ClickText    Contact    partial_match=False
     TypeText    Search for a contact...    Navya Tan
-    ClickText                        Navya Tanwar
+    ClickText                        ${CONTACT_NAME}
     ClickText    Stage
     ClickText    Pending                   recognition_mode=vision
     ClickText    Save
@@ -139,8 +141,8 @@ Login as PL
     ClickText    Programs              anchor=Home
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
-    TypeText          Search Programs and more...    Testing4     
-    ClickText       Testing4 - September 2026    
+    TypeText          Search Programs and more...    ${Acronym}     
+    ClickText       ${Acronym} - September 2026 - September 2026    
 
 Verify Admission of Participant as PL
     [Documentation]    Test Case created using the QEditor
@@ -221,8 +223,8 @@ Verify PL Can Revert Cancellation
     ClickText    Programs              anchor=Home
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
-    TypeText          Search Programs and more...    Testing4     
-    ClickText       Testing4 - September 2026    
+    TypeText          Search Programs and more...    ${Acronym}     
+    ClickText         ${Acronym} - September 2026    
     ClickText          Navya Tanwar
     ClickElement       xpath=//button[text()='Revert Cancel' or @title='Revert Cancel']
     Sleep              5s
@@ -279,10 +281,10 @@ Verify Participant Can Make Successful Partial Direct Payment through credit car
     ClickText     Programs
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search...')]    
-    TypeText          Search...    Testing4     
-    ClickText       Testing4 - September 2026   
+    TypeText          Search...    ${Acronym}     
+    ClickText       ${Acronym} - September 2026   
     ClickText          PayExed
-    ClickText          Testing4-R6450
+    ClickText          ${Acronym}-R6450
     ClickElement       xpath=//a[contains(@href,'pay')]
     SwitchWindow       NEW
     ClickText          Make Payment
@@ -364,7 +366,7 @@ Verify Partial Manual Refund Processing with finance user
     ClickText    Login
     ClickText    Home
     ClickText    Programs
-    ClickText    Testing4 - September 2026    
+    ClickText    ${Acronym} - September 2026    
     ClickText          PayExed
     ClickText          Testing4-R6450
     ClickElement       xpath=//*[text()='Create Payment / Refund']
