@@ -2,6 +2,7 @@
 Documentation           New test suite
 # You can change imported library to "QWeb" if testing generic web application, not Salesforce.
 Library                 QForce
+Library    DateTime    # Required for timestamp generation
 Suite Setup             Open Browser    https://gsbexeced--full.sandbox.lightning.force.com    chrome
 Suite Teardown          Close All Browsers
 Resource    Login_Keywords.resource
@@ -9,7 +10,8 @@ Resource    Login_Keywords.resource
 *** Variables ***
 ${VALID_ACRONYM}          ABCDFRGT123456BGRTiqn21
 ${INVALID_ACRONYM}        ABCDFRGT123456BGRTiqn2112
-${PROGRAM_NAME}           Executive Leadership Cohort 2028
+${timestamp}=    Get Current Date    result_format=%Y%m%d-%H%M%S
+${PROGRAM_NAME}=    Set Variable    OECT-Auto-${timestamp}
 ${CONTACT_NAME}           Navya Tanwar
 ${PAYER_NAME}             Diana Brown
 ${TRANSFER_COURSE}        AIP 2026
@@ -25,7 +27,7 @@ Login To Salesforce Instance
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    ARN9BS91X8
+    TypeText      Verification Code    5VKQODUZSH
     ClickText     Verify
     VerifyText    Home
 
@@ -48,7 +50,7 @@ Verify Finance Can Create A Valid Program
     VerifyText         New Program                    anchor=Cancel
     ClickText          Open Enrollment
     ClickText          Next
-    TypeText           Program Name                   Executive Leadership Cohort 2026
+    TypeText           Program Name                   ${PROGRAM_NAME}
     TypeText           Acronym                        Testing4
     TypeText           Start Date                     09/01/2026
     TypeText           End Date                       08/31/2027
