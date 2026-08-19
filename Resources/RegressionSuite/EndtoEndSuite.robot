@@ -10,8 +10,6 @@ Resource    Login_Keywords.resource
 *** Variables ***
 ${VALID_ACRONYM}          ABCDFRGT123456BGRTiqn21
 ${INVALID_ACRONYM}        ABCDFRGT123456BGRTiqn2112
-${timestamp}    Get Current Date     result_format=%Y%m%d-%H%M%S
-${PROGRAM_NAME}    OECT-Auto-${timestamp}
 ${CONTACT_NAME}           Navya Tanwar
 ${PAYER_NAME}             Diana Brown
 ${TRANSFER_COURSE}        AIP 2026
@@ -45,7 +43,12 @@ Login as Finance User
 
 Verify Finance Can Create A Valid Program
     [Documentation]    Verify CoreTech/Finance can create a valid program with all mandatory setup data and that the program is available for downstream enrollment and financial processing.
-    ${timestamp}=      Get Current Date    result_format=%Y%m%d-%H%M%S
+
+# Generate timestamp and dynamic program name at runtime
+    ${timestamp}=      Get Current Date               result_format=%Y%m%d-%H%M%S
+    ${PROGRAM_NAME}=   Set Variable                   OECT-Auto-${timestamp}
+    Set Suite Variable    ${PROGRAM_NAME}
+
     ClickText          Programs                       anchor=Home
     ClickElement       xpath=//a[@title='New']
     VerifyText         New Program                    anchor=Cancel
