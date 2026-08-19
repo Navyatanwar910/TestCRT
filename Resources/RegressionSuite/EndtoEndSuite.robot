@@ -45,6 +45,7 @@ Login as Finance User
 
 Verify Finance Can Create A Valid Program
     [Documentation]    Verify CoreTech/Finance can create a valid program with all mandatory setup data and that the program is available for downstream enrollment and financial processing.
+    ${timestamp}=      Get Current Date    result_format=%Y%m%d-%H%M%S
     ClickText          Programs                       anchor=Home
     ClickElement       xpath=//a[@title='New']
     VerifyText         New Program                    anchor=Cancel
