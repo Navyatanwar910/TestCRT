@@ -377,38 +377,44 @@ Verify Partial Manual Refund Processing with finance user
     ClickText    ${Acronym} - September 2026    
     ClickText          PayExed
     ClickElement       xpath=//a[starts-with(text(),'ACR-')]
-    Sleep              5s
-    ClickElement       xpath=//*[text()='Create Payment / Refund']
+    SwitchWindow       NEW
+    Sleep              2s
+    ClickElement       xpath=//button[text()='Create Payment / Refund']
     UseModal           On
 
     # Dropdown & Input Selections
-    DropDown       Payment Type                   Refund
+    ClickText          Payment         anchor=Payment Type
+    ClickText          Refund          anchor=Payment
+    ClickText          --None--                       anchor=Payment Method
+    ClickText          Credit Card                    anchor=ACH/Wire
+    ClickText          --None--                       anchor=Transaction
+    ClickElement       xpath=//span[starts-with(text(),'PT-')][1]
     TypeText           Amount                         2000                     # Adjust refund amount as needed
-    DropDown       Transaction                 PT-2055922 - $24800.00 - Available
-    DropDown       Payment Method                 Credit Card               # Replace with applicable method
 
-    # Form Submission
-    ClickText          Save
-    UseModal           Off
     
+    # Form Submission
+    ClickElement       xpath=//button[@name='SaveEdit' or text()='Save']    
+    UseModal           Off
+    VerifyText         Secure Public Id
+    ClickText          ACR-                        anchor=Invoice              partial_match=True    
 
 Verify Invalid Refund Processing Prevention
     [Documentation]    Verify invalid, duplicate, excessive, or unsupported refunds are rejected without corrupting financial balances.
     [Tags]             Negative
-    ClickText          Testing3-R6449
-    ClickElement       xpath=//*[text()='Create Payment / Refund']
+    ClickElement       xpath=//button[text()='Create Payment / Refund']
     UseModal           On
 
     # Dropdown & Input Selections
-    DropDown       Payment Type                   Refund
-    TypeText           Amount                         200000                     # Adjust refund amount as needed
-    DropDown       Transaction                 PT-2055922 - $24800.00 - Available
-    DropDown       Payment Method                 Credit Card               # Replace with applicable method
-
+    ClickText          Payment         anchor=Payment Type
+    ClickText          Refund          anchor=Payment
+    TypeText           Amount                         200000                    # Adjust refund amount as needed
+    ClickText          --None--                       anchor=Payment Method
+    ClickText          Credit Card                    anchor=ACH/Wire
+    
     # Form Submission
-    ClickText          Save
+    ClickElement       xpath=//button[@name='SaveEdit' or text()='Save'] 
+    VerifyText         Refund Amount cannot exceed the original transaction amount   
     UseModal           Off
-    VerifyText         Error
 
 # ==============================================================================
 # SECTION 5: CREDITS & CREDIT TRANSFERS
