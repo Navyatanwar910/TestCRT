@@ -73,11 +73,11 @@ Verify setting up email template
     [Documentation]    Test Case created using the QEditor
     
     ClickText          Details    anchor=Content    recognition_mode=vision
-    ClickText    Financials    anchor=PayExed
-    ClickText    PTA-Project Number
+    ClickText    Financials    anchor=OE
+    ClickText    Edit PTA-Project Number
     TypeText     PTA-Project Number                 1256
-    DropDown     PTA-Award                        EAFJY
-    ClickText    Edit Invoice Template
+    ClickText          --None--                       anchor=PTA-Award
+    ClickText          EAFJY
     ComboBox    Search Invoice Templates...    Standard OE Invoice Template    index=1
     ClickText    Save
     ClickText    Admit Email
@@ -130,7 +130,7 @@ Login as PL
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    5YJXMZKRHI
+    TypeText      Verification Code    5VKQODUZSH
     ClickText     Verify
     VerifyText    Home
     ClickText    Setup
@@ -182,7 +182,7 @@ Login as Finance User to check for finance requests
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    5YJXMZKRHI
+    TypeText      Verification Code    5VKQODUZSH
     ClickText     Verify
     VerifyText    Home    
     ClickText    Setup
@@ -212,7 +212,7 @@ Verify PL Can Revert Cancellation
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    5YJXMZKRHI
+    TypeText      Verification Code    5VKQODUZSH
     ClickText     Verify
     VerifyText    Home
     ClickText    Setup
@@ -242,7 +242,7 @@ Verify a finance request is raised for reverting the Cancellation
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    5YJXMZKRHI
+    TypeText      Verification Code    5VKQODUZSH
     ClickText     Verify
     VerifyText    Home    
     ClickText    Setup
@@ -275,7 +275,7 @@ Verify Participant Can Make Successful Partial Direct Payment through credit car
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    5YJXMZKRHI
+    TypeText      Verification Code    5VKQODUZSH
     ClickText     Verify
     VerifyText    Home
     ClickText     Programs
@@ -356,7 +356,7 @@ Verify Partial Manual Refund Processing with finance user
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    5YJXMZKRHI
+    TypeText      Verification Code    5VKQODUZSH
     ClickText     Verify
     VerifyText    Home    
     ClickText    Setup
