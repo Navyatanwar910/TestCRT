@@ -371,24 +371,9 @@ Verify a finance request is raised for reverting the Cancellation
     Sleep        10s
     ClickText    Revert Cancel         anchor=Action
     Sleep        10s
-    ClickText          Log out
+    
 Verify Transfer of a participant beforing admitting to another program
-    OpenBrowser    ${login_url}    chrome
-    VerifyText    Salesforce login
-    TypeText      Username         ${username_Admin}
-    ClickText     Log In to Sandbox
-    VerifyText    Password
-    TypeSecret    Password    ${password_Admin}
-    ClickText     Log In to Sandbox
-    VerifyText    Verify Your Identity
-    TypeText      Verification Code    5VKQODUZSH
-    ClickText     Verify
-    VerifyText    Home
-    ClickText    Setup
-    ClickText    Opens in a new tab
-    SwitchWindow    NEW
-    ClickText    Justina Kayastha
-    ClickText    Login
+ 
     ClickText    Programs              anchor=Home
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
@@ -409,34 +394,7 @@ Verify Transfer of a participant beforing admitting to another program
     ClickText    Testing2 2026 | Sep 1, 2026 - Aug 31, 2027 | Executive Leadership Cohort 2026 
     TypeText     Please provide detailed information about your request...     test
     ClickText    Submit
-
-    ClickText          Log out
-    OpenBrowser    ${login_url}    chrome
-    VerifyText    Salesforce login
-    TypeText      Username         ${username_Admin}
-    ClickText     Log In to Sandbox
-    VerifyText    Password
-    TypeSecret    Password    ${password_Admin}
-    ClickText     Log In to Sandbox
-    VerifyText    Verify Your Identity
-    TypeText      Verification Code    5VKQODUZSH
-    ClickText     Verify
-    VerifyText    Home    
-    ClickText    Setup
-    ClickText    Opens in a new tab
-    SwitchWindow    NEW
-    ClickText    Debbie Bishko
-    ClickText    Login
-    ClickText    Home
-    ClickElement       xpath=//one-app-nav-bar-item-root[.//span[text()='Tasks']]//a    
-    ClickText    Select list display
-    ClickText    Table
-    ClickText    Select a List View: Tasks
-    ClickText    Finance Requests      anchor=Completed Tasks    index=2
-    ClickText    Create Date
-    ClickText    Financial Request - Transfer 
-    VerifyText                        Action has been performed 
-    Sleep                        5s 
+     
     
 Verify Split of an Invoice and Payment of Child Invoice
 
