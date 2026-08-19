@@ -143,8 +143,8 @@ Login as PL
     ClickText    Login
     ClickText    Programs              anchor=Home
     ClickText    Search...
-    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
-    TypeText          Search Programs and more...    ${Acronym}     
+    ClickElement     xpath=//input[contains(@placeholder,'Search...')]    
+    TypeText          Search...    ${Acronym}     
     ClickText       ${Acronym} - September 2026  
 
 Verify Admission of Participant as PL
@@ -165,8 +165,8 @@ Verify Cancellation request as PL
     VerifyText         Fee Payer(s):
     ClickText          Please select a type
     ClickText          Cancel
-    ClickText          Refund Amount
-    TypeText           Refund Amount                      20000
+#  ClickText          Refund Amount
+#   TypeText           Refund Amount                      20000
     ClickText          Comments
     TypeText           Comments                        Cancel
     ClickText          Submit
@@ -201,8 +201,9 @@ Login as Finance User to check for finance requests
     ClickText    Finance Requests      anchor=Completed Tasks    index=2
     ClickText    Create Date
     ClickText    Financial Request - Cancel    anchor=justinak
-    ClickText    Cancel + Refund
+    ClickText    Cancel                        anchor=Action
     ClickText    Submit Cancellation           recognition_mode=vision
+    Sleep        5s
 
 Verify PL Can Revert Cancellation
     [Documentation]    Verify PL can revert an enrollment change without payment and that all related records return to their previous valid state.
@@ -261,7 +262,8 @@ Verify a finance request is raised for reverting the Cancellation
     ClickText    Finance Requests      anchor=Completed Tasks    index=2
     ClickText    Create Date
     Sleep        10s
-    ClickText    Revert    anchor=justinak
+    ClickText    Revert Cancel         index=1
+    VerifyText                        Action has been performed
     Sleep        10s
     ClickText          Log out
 # ==============================================================================
@@ -290,7 +292,7 @@ Verify Participant Can Make Successful Partial Direct Payment through credit car
     ClickElement       xpath=//a[starts-with(text(),'ACR-')]
     Sleep              5s
     ClickElement       xpath=//a[contains(@href,'pay')]
-    SwitchWindow       New
+    SwitchWindow       NEW
     ClickText          Make Payment
     ClickText          Payment Amount (USD)
     TypeText           Payment Amount (USD)          25000
@@ -331,6 +333,7 @@ Verify Participant Can Make Successful Partial Direct Payment through Amazon Pay
     [Documentation]    Verify Participant/Payer can make a successful partial direct payment and that the remaining balance is calculated correctly.
     ScrollTo           PDF Preview
     ClickElement       xpath=//a[contains(@href,'pay')]
+    SwitchWindow       NEW
     ClickText          Make Payment
     ClickText          Amazon Pay
     ClickText          PAY NOW
@@ -372,7 +375,8 @@ Verify Partial Manual Refund Processing with finance user
     ClickText    Programs
     ClickText    ${Acronym} - September 2026    
     ClickText          PayExed
-    ClickText          Testing4-R6450
+    ClickElement       xpath=//a[starts-with(text(),'ACR-')]
+    Sleep              5s
     ClickElement       xpath=//*[text()='Create Payment / Refund']
     UseModal           On
 
