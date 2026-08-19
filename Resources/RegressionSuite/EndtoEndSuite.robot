@@ -11,7 +11,7 @@ Resource    Login_Keywords.resource
 ${VALID_ACRONYM}          ABCDFRGT123456BGRTiqn21
 ${INVALID_ACRONYM}        ABCDFRGT123456BGRTiqn2112
 ${timestamp}=    Get Current Date    result_format=%Y%m%d-%H%M%S
-${PROGRAM_NAME}=    Set Variable    OECT-Auto-${timestamp}
+${PROGRAM_NAME}    OECT-Auto-${timestamp}
 ${CONTACT_NAME}           Navya Tanwar
 ${PAYER_NAME}             Diana Brown
 ${TRANSFER_COURSE}        AIP 2026
