@@ -4,7 +4,7 @@ Documentation           New test suite
 Library                 QForce
 Suite Setup             Open Browser    https://gsbexeced--full.sandbox.lightning.force.com    chrome
 Suite Teardown          Close All Browsers
-Resource    ../Login_Keywords.resource
+Resource    Login_Keywords.resource
 
 *** Variables ***
 ${VALID_ACRONYM}          ABCDFRGT123456BGRTiqn21
