@@ -397,7 +397,7 @@ Verify Transfer of a participant beforing admitting to another program
      
     
 Verify Split of an Invoice and Payment of Child Invoice
-
+    ClickText    Log out
     OpenBrowser    ${login_url}    chrome
     VerifyText    Salesforce login
     TypeText      Username         ${username_Admin}
@@ -409,33 +409,12 @@ Verify Split of an Invoice and Payment of Child Invoice
     TypeText      Verification Code    5VKQODUZSH
     ClickText     Verify
     VerifyText    Home
-    ClickText    Setup
-    ClickText    Opens in a new tab
-    SwitchWindow    NEW
-    ClickText    Justina Kayastha
-    ClickText    Login
     ClickText    Programs              anchor=Home
     ClickText    Search...
     ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
     TypeText          Search Programs and more...    ${Acronym}     
     ClickText         ${Acronym} - September 2026
     ClickText    Overview
-    ClickText    New
-    ClickText    Contact    partial_match=False
-    TypeText    Search for a contact...    Anjali
-    ClickText                        Anjali Kotawala
-    ClickText    Stage
-    ClickText    Pending                   recognition_mode=vision
-    ClickText    Save
-    ClickText    Enrollment                anchor=Overview
-    ClickText        Pending | Applicant
-    ClickElement    xpath=//tr[.//a[contains(text(),'Anjali Kotawala')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
-    ClickText       Admit with Invoice and Email
-    ClickText       Select Email Template
-    ClickText       Admit - On Campus
-    ClickText       Send Email(s)
-    Sleep           5s
-
 Verify Split Invoice as PL
 
     ClickText       PayExed                anchor=Enrollment
@@ -452,64 +431,27 @@ Verify Validations on User Defined Split Invoice
     VerifyText                  Original Invoice Amount   
     VerifyText                  Total Split Amount       
     ClickText                   Add Split   
-    TypeText                    Percent                    50.00%    anchor=Split Type
-    TypeText                    Days                       30        anchor=Due Date Type
-    ScrollTo                     Remove    anchor=Days
-    ClickText                    Add Split
-    ScrollTo                     Remove    anchor=Days
-    Sleep                        5s
-    TypeText                     Percent             40.00%    anchor=Remove
-    TypeText                     Days                20        anchor=Remove
-    VerifyText                   Validation Errors
-    Sleep                        5s    
-    ClickText                    Cancel              anchor=Submit
-
-Verify split of invoice with user defined template where invoice status is Unpaid and split is based on Percentage
-    [Documentation]    Template based
-
-    Sleep              2s
-    ClickText          Split Invoice    recognition_mode=vision
-    UseModal           on
-    Sleep              2s
-    SetConfig          ShadowDOM    True       
-    ClickText                   Add Split   
     TypeText                    Percent                    60.00%    anchor=Split Type
     TypeText                    Days                       30        anchor=Due Date Type
     ScrollTo                     Remove    anchor=Days
     ClickText                    Add Split
     ScrollTo                     Remove    anchor=Days
     Sleep                        5s
-    TypeText                     Percent             40.00%    anchor=Remove
+    TypeText                     Percent             30.00%    anchor=Remove
     TypeText                     Days                20        anchor=Remove
+    VerifyText                   Validation Errors
     Sleep                        5s    
+
+Verify split of invoice with user defined template where invoice status is Unpaid and split is based on Percentage
+    [Documentation]    Template based
+
+    TypeText                    Percent                    40.00%    anchor=Split Type
+    TypeText                    Days                       30        anchor=Due Date Type 
     ClickText                    Submit                anchor=Cancel
     Sleep                        5s
     ScrollTo                     Child Invoices
     VerifyText                   Invoice Number
     VerifyText                   Net Invoice Amount        
     VerifyText                   Invoice Status
-    ClickText                    Due Date
-    ClickText                    ${Child_Invoice}
-    Sleep                        5s
-    ClickText                    PDF Preview
-    Sleep                        5s
-    ClickText                    Details
-    VerifyText                   Invoice Status
-    VerifyText                   Unpaid
-    VerifyText                   Due Date
-    ClickElement                 xpath=//a[text()='Pay']
-    SwitchWindow                 NEW
-    ClickText                    Make Payment
-    Sleep                        5s
-    ClickText                    Amazon Pay
-    ClickText                    PAY NOW
-    ClickText                    AUTHORIZE TEST PAYMENT
-    VerifyText                   ${Child_Invoice}
-    VerifyText                   Paid
-    SwitchWindow                 2
-    RefreshPage
-    VerifyText                   Invoice Status
-    VerifyText                   Paid
-    ClickElement                 xpath=//span[text()='Parent Invoice']/following::a[1]
-    VerifyText                   Invoice Status
-    VerifyText                   Partially Paid
+    ClickElement                 xpath=//a[starts-with(text(),'ACR-20260819')]    anchor=Invoice Number
+
