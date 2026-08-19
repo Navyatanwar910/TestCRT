@@ -47,7 +47,7 @@ Verify Finance Can Create A Valid Program
 # Generate timestamp and dynamic program name at runtime
     ${timestamp}=      Get Current Date               result_format=%Y%m%d-%H%M%S
     ${PROGRAM_NAME}=   Set Variable                   Program-Auto-${timestamp}
-    ${Acronym}=        Set Variable                   Acronym-Auto-${timestamp}
+    ${Acronym}=        Set Variable                   ACR-${timestamp}
     Set Suite Variable    ${PROGRAM_NAME}
     Set Suite Variable    ${Acronym}
 
