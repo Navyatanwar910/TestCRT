@@ -413,7 +413,8 @@ Verify Invalid Refund Processing Prevention
     
     # Form Submission
     ClickElement       xpath=//button[@name='SaveEdit' or text()='Save'] 
-    VerifyText         Refund Amount cannot exceed the original transaction amount   
+    VerifyText         Refund Amount cannot exceed the original transaction amount
+    ClickText          Cancel   
     UseModal           Off
 
 # ==============================================================================
@@ -422,6 +423,7 @@ Verify Invalid Refund Processing Prevention
 
 Verify Transfer of Participant to another program where the payment made is partial by the Participant
     [Documentation]    Transfer Actions
+    ClickText          ${Acronym}
     ClickText          PayExed
     ClickElement       xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText          Finance Request
@@ -432,11 +434,6 @@ Verify Transfer of Participant to another program where the payment made is part
     TypeText     Please provide detailed information about your request...     test
     ClickText    Submit
 
-    ClickText     View New Finance Request
-    VerifyText    Financial Request - Transfer
-    ClickText     Transfer                        anchor=Action
-    sleep         2s
-    ClickText     Submit Transfer
     ClickElement       xpath=//one-app-nav-bar-item-root[.//span[text()='Tasks']]//a    
     ClickText    Select list display
     ClickText    Table
@@ -446,8 +443,9 @@ Verify Transfer of Participant to another program where the payment made is part
     ClickText    Financial Request - Transfer    
     ClickElement                       xpath=//a[contains(@href,'Transfer')]
     ClickText                        Submit Transfer             anchor=cancel
+    
     ClickText                        Programs
-    ClickText                        Testing4 - September 2026
+    ClickText                        ${Acronym}
     ClickText                        Enrollment                  anchor=Overview
     ClickText                        Transfer 
     ClickText                        AIP 2027  
@@ -460,27 +458,38 @@ Verify Transfer of Participant to another program where the payment made is part
     VerifyText                       Credit Balance
     Sleep                        10s
        
-Verify Participant is transfer to another program after making full payment of previous program.
-    SwitchWindow    3
-    ClickText                        Enrollment                  anchor=Overview  
+Verify Participant is transfer to same program after making full payment of previous program.
+    ClickText    Programs    anchor=Home
+    ClickText    Search...
+    ClickElement     xpath=//input[contains(@placeholder,'Search Programs and more...')]    
+    TypeText          Search Programs and more...    AIP - july 2027     
+    ClickText         AIP - july 2027
+    ClickText    Enrollment         anchor=Overview  
     ClickElement       xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText         Transfer    anchor=Withdraw
     TypeText    Search for a course...    AIP\n    anchor=To Course
     ClickText    AIP3                 anchor=To Course
     TypeText     Please provide detailed information about your request...     test
     ClickText    Submit 
-    ClickText     View New Finance Request
-    VerifyText    Financial Request - Transfer
-    ClickText     Transfer                        anchor=Action
-    sleep         2s
-    ClickText     Submit Transfer
-    ClickText     AIP3 - November 2027
+    ClickElement       xpath=//one-app-nav-bar-item-root[.//span[text()='Tasks']]//a    
+    ClickText    Select list display
+    ClickText    Table
+    ClickText    Select a List View: Tasks
+    ClickText    Finance Requests      anchor=Completed Tasks    index=2
+    ClickText    Create Date
+    ClickText    Financial Request - Transfer    
+    ClickElement                       xpath=//a[contains(@href,'Transfer')]
+    ClickText                        Submit Transfer             anchor=cancel
+    ClickText                        Cancel
+    VerifyText                   Comments
+    VerifyText                   Error with auto processing: Cannot transfer back to this program. This would create a transfer cycle. You have already transferred from this program and reverted back.
+    Sleep                        10s
 
-Verify Spliting of Unpaid Invoice
+Verify Spliting of Partially Paid Invoice
     ClickText    Programs
-    ClickText    Testing3 0 September 2026
-    ClickText          PayExed
-    ClickText          Testing3-R6449
+    ClickText    AIP - July 2027
+    ClickText    PayExed             anchor=enrollment
+    ClickText    AIP-R6521           anchor=Navya Tanwar
     SwitchWindow       NEW
     ClickText          Split Invoice    recognition_mode=vision
     UseModal           on
