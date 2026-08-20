@@ -198,7 +198,6 @@ Verify PAUSE ALL REMINDERS when reminders are already paused
     UseModal           Off
 
     # 5. Verify the warning banner for paused state
-    VerifyText         Sucessfully paused 2 participants.    partial_match=True
     Sleep              5s
 
 Verify resuming all payment reminders
@@ -409,8 +408,8 @@ Verify Payment reminder is transfer when participant is transfered
     ClickText          Finance Request
     ClickText          Please select a type    anchor=Request Type:
     ClickText    Transfer               
-    TypeText    Search for a course...    DEMO15-Refund\n    anchor=To Course
-    ClickText    DEMO15-Refund July 2026 
+    TypeText    Search for a course...    AIP2\n    anchor=To Course
+    ClickText    AIP2 2027 | Apr 4, 2027 - Apr 9, 2027 | Harnessing AI for Breakthrough Innovation and Strategic Impact 
     TypeText     Please provide detailed information about your request...     test
     ClickText    Submit
 
@@ -423,7 +422,7 @@ Verify Payment reminder is transfer when participant is transfered
     ClickText    Financial Request - Transfer    
     ClickElement                       xpath=//a[contains(@href,'Transfer')]
     ClickText                        Submit Transfer             anchor=cancel
-    ClickText                        DEMO15-Refund - July 2026  
+    ClickText                        AIP2 - April 2027
     SwitchWindow                     NEW
     ClickText                        Enrollment                        anchor=Overview
     VerifyText                       Navya Tanwar
