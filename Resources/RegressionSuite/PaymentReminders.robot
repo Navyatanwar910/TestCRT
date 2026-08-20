@@ -167,3 +167,168 @@ Verify Manually Rescheduled Information On Reminder Card
     # 4. Verify card action state buttons
     VerifyText         Resume                                     anchor=First Reminder
     VerifyText         Reschedule                                 anchor=First Reminder
+
+Verify Generate reminders Actions In Payment Reminders Global Dropdown
+
+    # 1. GENERATE REMINDERS FOR ALL ADMIT PARTICIPANTS
+    # Open the global Payment Reminders dropdown menu
+    ClickElement       xpath=//*[text()='Payment Reminders']/following::button[contains(@class,'slds-button_icon') or contains(@class,'dropdown')][1]
+    VerifyText         Generate Reminders for All Admit Participants
+    ClickText          Generate Reminders for All Admit Participants
+
+    # Confirm in modal
+    UseModal           On
+    VerifyText         Generate Payment Reminders
+    VerifyText         This will create payment reminders for all participants in "Admit" status who don't already have scheduled reminders.
+    ClickText          Generate                       anchor=Cancel
+    UseModal           Off
+
+    # Verify toast/warning message
+    VerifyText         Success! All participants are up to date. No payment reminders were generated.    partial_match=True
+
+    # ---------------------------------------------------------------------------------------------------------
+
+Verify PAUSE ALL REMINDERS when reminders are already paused
+    # 1. Click 'Pause All Reminders' from the global dropdown menu
+    ClickElement       xpath=//*[text()='Payment Reminders']/following::button[contains(@class,'slds-button_icon') or contains(@class,'dropdown')][1]
+    VerifyText         Pause All Reminders
+    ClickText          Pause All Reminders
+
+    # 2. Scope interaction to the 'Pause All Scheduled Reminders' modal
+    UseModal           On
+    VerifyText         Pause All Scheduled Reminders
+    VerifyText         This will pause all scheduled reminders for this program.
+
+    # 3. Enter the required 'Reason for Pausing'
+    TypeText           Reason for Pausing             Bulk pausing for automated test script verification
+
+    # 4. Click the 'Pause' button inside the modal
+    ClickText          Pause                          anchor=Cancel
+    UseModal           Off
+
+    # 5. Verify the warning banner for paused state
+    VerifyText         No scheduled reminders to pause    partial_match=True
+    # ---------------------------------------------------------------------------------------------------------
+
+Verify RESUME PAYMENT REMINDERS
+    # Open the global dropdown menu once more
+    ClickElement       xpath=//*[text()='Payment Reminders']/following::button[contains(@class,'slds-button_icon') or contains(@class,'dropdown')][1]
+    VerifyText         Resume Payment Reminders
+    ClickText          Resume Payment Reminders
+
+    # Verify success banner message
+    VerifyText         Payment reminders have been resumed. Past reminders were deleted, future reminders restored to Scheduled status.    partial_match=True
+
+Verify Pausing all reminders
+    # 1. Click 'Pause All Reminders' from the global dropdown menu
+    ClickElement       xpath=//*[text()='Payment Reminders']/following::button[contains(@class,'slds-button_icon') or contains(@class,'dropdown')][1]
+    VerifyText         Pause All Reminders
+    ClickText          Pause All Reminders
+
+    # 2. Scope interaction to the 'Pause All Scheduled Reminders' modal
+    UseModal           On
+    VerifyText         Pause All Scheduled Reminders
+    VerifyText         This will pause all scheduled reminders for this program.
+
+    # 3. Enter the required 'Reason for Pausing'
+    TypeText           Reason for Pausing             Bulk pausing for automated test script verification
+
+    # 4. Click the 'Pause' button inside the modal
+    ClickText          Pause                          anchor=Cancel
+    UseModal           Off
+
+    # 5. Verify the warning banner for paused state
+    VerifyText         Note: Program reminders are paused - newly created reminders have Paused status.    partial_match=True
+Verify Delete Reminder And Recreate From Dropdown
+ 
+    # 1. Click Delete on the target reminder card
+    ClickText          Delete                         anchor=First Reminder
+
+    # 2. Accept the native browser alert dialog
+    CloseAlert        action=ACCEPT
+
+    # 3. Verify the deletion success message
+    VerifyText         Reminder deleted successfully    partial_match=True
+
+    # 4. Verify whether the reminder is removed or if another card exists
+    ${reminder_exists}=    IsText                     First Reminder
+    Run Keyword If     '${reminder_exists}' == 'True'    VerifyText    First Reminder    anchor=Navya Tanwar
+
+    # 5. Re-create a new reminder from the global dropdown menu
+    ClickElement       xpath=//*[text()='Payment Reminders']/following::button[contains(@class,'slds-button_icon') or contains(@class,'dropdown')][1]
+    VerifyText         Generate Reminders for All Admit Participants
+    ClickText          Generate Reminders for All Admit Participants
+
+    # 6. Confirm creation in modal
+    UseModal           On
+    VerifyText         Generate Payment Reminders
+    ClickText          Generate                       anchor=Cancel
+    UseModal           Off
+
+    # 7. Verify newly generated reminder card exists on UI
+    ScrollTo           Delete
+    VerifyText         First Reminder                 anchor=Navya Tanwar
+
+Verify Adding New Reminder Via Plus Button
+    # 1. Hover over the '+' button to display the tooltip text and click it
+    HoverElement       xpath=//button[contains(@class,'slds-button') and .//*[local-name()='svg' and @data-key='add']] | //*[text()='${contact_name}']/following::button[contains(.,'+') or contains(@title,'Add New Reminder')][1]
+    ClickElement       xpath=//*[text()='${contact_name}']/following::button[contains(.,'+') or contains(@title,'Add New Reminder') or @title='Add New Reminder'][1]
+
+    # 2. Scope steps inside the 'Add New Reminder' modal
+    UseModal           On
+    VerifyText         Add New Reminder
+
+    # 3. Enter today's date for Reminder Date
+    ${today_date}=     Get Current Date               result_format=%m/%d/%Y
+    TypeText           Reminder Date                  ${today_date}
+
+    # 4. Select the 3rd template ('OE General Payment Reminder 3') from the dropdown
+    ClickText          Select a template
+    ClickText          OE General Payment Reminder 3
+
+    # 5. Submit to create the reminder
+    ClickText          Create Reminder                anchor=Cancel
+    UseModal           Off
+    VerifyText         Final Reminder
+Verify Duplicate Reminder Cannot Be Created On Same Date
+    # 1. Click '+' button to open 'Add New Reminder' modal
+    ClickElement       xpath=//*[text()='${contact_name}']/following::button[contains(.,'+') or contains(@title,'Add New Reminder') or @title='Add New Reminder'][1]
+
+    # 2. Scope steps inside the modal
+    UseModal           On
+    VerifyText         Add New Reminder
+
+    # 3. Enter target date (e.g., Today's date)
+    ${today_date}=     Get Current Date               result_format=%m/%d/%Y
+    TypeText           Reminder Date                  ${today_date}
+
+    # 4. Select a template that already exists on the same date (e.g. Final Reminder / Template 1)
+    ClickText          Select a template
+    ClickText          OE General Payment Reminder 3
+
+    # 5. Attempt to create duplicate reminder
+    ClickText          Create Reminder                anchor=Cancel
+    UseModal           Off
+
+    # 6. Verify duplicate error toast message appears
+    VerifyText         Emails with the same subject cannot be sent on the same day.    partial_match=True
+Verify Past Date Reminder Cannot Be Created
+    # 1. Click '+' button to open 'Add New Reminder' modal
+    ClickElement       xpath=//*[text()='${contact_name}']/following::button[contains(.,'+') or contains(@title,'Add New Reminder') or @title='Add New Reminder'][1]
+
+    # 2. Scope steps inside the modal
+    UseModal           On
+    VerifyText         Add New Reminder
+
+    # 3. Calculate a past date (1 day before today) and type into Reminder Date
+    ${past_date}=      Get Current Date               increment=-1 day    result_format=%m/%d/%Y
+    TypeText           Reminder Date                  ${past_date}
+
+    # 4. Select a template and attempt to submit
+    ClickText          Select a template
+    ClickText          OE General Payment Reminder 1
+    ClickText          Create Reminder                anchor=Cancel
+    UseModal           Off
+
+    # 5. Verify the error message toast appears on UI
+    VerifyText         Reminder Date cannot be in the past    partial_match=True
