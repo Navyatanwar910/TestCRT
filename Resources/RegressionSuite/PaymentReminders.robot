@@ -332,3 +332,4 @@ Verify Past Date Reminder Cannot Be Created
 
     # 5. Verify the error message toast appears on UI
     VerifyText         Reminder Date cannot be in the past    partial_match=True
+
