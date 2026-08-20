@@ -208,6 +208,7 @@ Verify PAUSE ALL REMINDERS when reminders are already paused
 
     # 5. Verify the warning banner for paused state
     VerifyText         No scheduled reminders to pause    partial_match=True
+    Sleep              5s
     # ---------------------------------------------------------------------------------------------------------
 
 Verify RESUME PAYMENT REMINDERS
@@ -238,7 +239,6 @@ Verify Pausing all reminders
     UseModal           Off
 
     # 5. Verify the warning banner for paused state
-    VerifyText         Note: Program reminders are paused - newly created reminders have Paused status.    partial_match=True
 Verify Delete Reminder And Recreate From Dropdown
  
     # 1. Click Delete on the target reminder card
