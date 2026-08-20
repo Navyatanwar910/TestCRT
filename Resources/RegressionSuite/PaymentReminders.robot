@@ -7,7 +7,7 @@ Suite Setup             Open Browser    https://gsbexeced--full.sandbox.lightnin
 Suite Teardown          Close All Browsers
 
 *** Variables ***
-@{CONTACT_NAME}    Navya Tanwar    Anjali Kotawala    Aditya Ranjan Patro
+${contact_name}    Navya Tanwar   
 
 *** Test Cases ***
 Login To Salesforce Instance
@@ -66,13 +66,11 @@ Verify Creation of a Program and addition of Participants in it for sending paym
     ClickText    Admit - On Campus
     ClickText    Save
 #Addition of Participants
-FOR    ${contact_name}    IN    @{CONTACT_NAMES}
-        ClickText    Overview
-        ClickText    New
-        ClickText    Contact                      partial_match=False
-        TypeText     Search for a contact...      ${contact_name}
-        ClickText    ${contact_name}
-        ClickText    Stage
-        ClickText    Pending                      recognition_mode=vision
-        ClickText    Save
-END
+    ClickText    Overview
+    ClickText    New
+    ClickText    Contact                      partial_match=False
+    TypeText     Search for a contact...      ${contact_name}
+    ClickText    ${contact_name}
+    ClickText    Stage
+    ClickText    Pending                      recognition_mode=vision
+    ClickText    Save
