@@ -19,7 +19,7 @@ Login To Salesforce Instance
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    5VKQODUZSH
+    TypeText      Verification Code    NY2UIUDIVN
     ClickText     Verify
     VerifyText    Home
 
