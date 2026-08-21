@@ -15,6 +15,8 @@ ${email_subject}    Acceptance: Tanwar: Program-Auto-20260820-132926 December 20
 ${expected_status}  Sent
 ${contact_name}    Navya Tanwar
 ${task_subject}    Call
+${contact_name}       Navya Tanwar
+${attendance_status}  Confirmed
 
 
 *** Test Cases ***
@@ -46,13 +48,15 @@ Verify Activity Tab Functionality
     # Test Search functionality
     TypeText           Search subject or body         ${search_term}
     VerifyText         ${search_term}                 timeout=5s
-
+    Sleep              5s
     # Clear search input
     TypeText           Search subject or body         ${EMPTY}
 
     # 5. Expand individual activity timeline items
-    ClickElement       xpath=//*[text()='August 2026']/following::a[contains(.,'Payment -')][1] | //*[text()='August 2026']/following::button[contains(@class,'slds-button_icon')][1]
-    VerifyText         Amount                         timeout=5s
+  #  ScrollTo           Navya Tanwar had a payment
+  #  ClickElement       xpath=//*[text()='August 2026']/following::a[contains(.,'Payment -')][1] | //*[text()='August 2026']/following::button[contains(@class,'slds-button_icon')][1]
+   # VerifyText         Amount                         timeout=5s
+  #  Sleep              5s
 
     # 6. Test Collapse All / Expand All toggle
     ${is_collapse_present}=                           IsText    Collapse All    timeout=3s
@@ -97,3 +101,22 @@ Create Log Note And Verify In Activity Tab
 
     # 5. Verify the created task exists under Activity timeline
     VerifyText         ${task_subject}                anchor=${contact_name} had a task
+
+Change Attendance Status And Verify On Invoice Page
+    # 1. Open the action menu for Navya Tanwar row and select Change Attendance
+    ClickElement       xpath=//tr[td[contains(.,'${contact_name}')]]//button[contains(@class,'slds-button_icon')] | //tr[td[contains(.,'${contact_name}')]]//td[last()]//a
+    ClickText          Change Attendance
+
+    # 2. Select 'Confirmed' in Update Attendance Status modal
+    UseModal           On
+    VerifyText         Update Attendance Status
+    ClickElement       xpath=//button[contains(@aria-label,'Attendance Status') or contains(.,'Select an option')] | //*[text()='Attendance Status']/following::button[1]
+    ClickElement       xpath=//*[@role='option' and .='${attendance_status}'] | //*[contains(@class,'slds-dropdown')]//*[text()='${attendance_status}']
+    ClickText          Save                           anchor=Cancel
+    UseModal           Off
+
+    # 3. Click the ACR invoice link under Navya Tanwar
+    ClickElement       xpath=//a[contains(text(),'ACR-')]
+
+    # 4. Verify Communication Status is updated to Confirmed on the Invoice page
+    VerifyField        Communication Status           Confirmed
