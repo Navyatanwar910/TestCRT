@@ -11,6 +11,10 @@ Suite Teardown          Close All Browsers
 ${contact_name}    Navya Tanwar   
 ${ProgramStartDateOfDec}    12/01/2026
 ${search_term}    Acceptance: Tanwar
+${email_subject}    Acceptance: Tanwar: Program-Auto-20260820-132926 December 2026
+${expected_status}  Sent
+${contact_name}    Navya Tanwar
+${task_subject}    Call
 
 
 *** Test Cases ***
@@ -41,15 +45,13 @@ Verify Activity Tab Functionality
 
     # Test Search functionality
     TypeText           Search subject or body         ${search_term}
-    PressKey           xpath=//input[contains(@placeholder,'Search subject or body')]    \13
     VerifyText         ${search_term}                 timeout=5s
 
     # Clear search input
     TypeText           Search subject or body         ${EMPTY}
-    PressKey           xpath=//input[contains(@placeholder,'Search subject or body')]    \13
 
     # 5. Expand individual activity timeline items
-    ClickElement       xpath=//span[contains(text(),'Payment -')]/ancestor::a | //div[contains(.,'Payment -')]//button
+    ClickElement       xpath=//*[text()='August 2026']/following::a[contains(.,'Payment -')][1] | //*[text()='August 2026']/following::button[contains(@class,'slds-button_icon')][1]
     VerifyText         Amount                         timeout=5s
 
     # 6. Test Collapse All / Expand All toggle
@@ -62,3 +64,38 @@ Verify Activity Tab Functionality
         ClickText      Expand All
         VerifyText     Collapse All                   timeout=5s
     END
+    
+Verify Email Status In Activity Tab
+    # 1. Option 1: Direct text verification anchored to the specific email subject
+    VerifyText         ${expected_status}             anchor=${email_subject}
+
+    # 2. Option 2: XPath element verification to ensure status badge exists next to the email entry
+    VerifyElement      xpath=//*[contains(text(),'${email_subject}')]/following::*[text()='${expected_status}'][1]
+
+
+Create Log Note And Verify In Activity Tab
+    # 1. Open the participant row dropdown on PayExed tab and click 'Log Notes'
+    ClickElement       xpath=//tr[td[contains(.,'${contact_name}')]]//button[contains(@class,'slds-button_icon')] | //tr[td[contains(.,'${contact_name}')]]//td[last()]//a
+    ClickText          Log Notes
+
+    # 2. Fill out the Create Note modal
+    UseModal           On
+    VerifyText         Create Note
+
+    TypeText           Subject                        ${task_subject}
+    ClickElement       xpath=//button[contains(@aria-label,'Task Subtype') or contains(.,'Task Subtype')] | //*[contains(text(),'Task Subtype')]/following::button[1]
+    ClickElement       xpath=//*[@title='Call' or contains(text(),'Call')]
+
+    ClickText          Save                           anchor=Cancel
+    UseModal           Off
+
+    # 3. Verify success toast notification
+    VerifyText         Task "Call" was created.       timeout=10s
+
+    # 4. Refresh Activity tab and verify created task item appears
+    ClickText          Activity                       anchor=Contact Highlights
+    ClickElement       xpath=//*[text()='Activity']/following::a[contains(text(),'Refresh')][1] | //a[text()='Refresh']
+    VerifyText         Data refreshed successfully    timeout=10s
+
+    # 5. Verify the created task exists under Activity timeline
+    VerifyText         ${task_subject}                anchor=${contact_name} had a task
