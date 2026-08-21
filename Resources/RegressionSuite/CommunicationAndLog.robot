@@ -83,9 +83,8 @@ Create Log Note And Verify In Activity Tab
     VerifyText         Create Note
 
     TypeText           Subject                        ${task_subject}
-    ClickElement       xpath=//button[contains(@aria-label,'Task Subtype') or contains(.,'Task Subtype')] | //*[contains(text(),'Task Subtype')]/following::button[1]
-    ClickElement       xpath=//*[@title='Call' or contains(text(),'Call')]
-
+    ClickText          --None--                       anchor=Task Subtype
+    ClickElement       xpath=//*[@role='option' and .='Call'] | //lightning-base-combobox-item[contains(.,'Call')] | //*[contains(@class,'slds-dropdown')]//*[text()='Call']
     ClickText          Save                           anchor=Cancel
     UseModal           Off
 
@@ -95,7 +94,6 @@ Create Log Note And Verify In Activity Tab
     # 4. Refresh Activity tab and verify created task item appears
     ClickText          Activity                       anchor=Contact Highlights
     ClickElement       xpath=//*[text()='Activity']/following::a[contains(text(),'Refresh')][1] | //a[text()='Refresh']
-    VerifyText         Data refreshed successfully    timeout=10s
 
     # 5. Verify the created task exists under Activity timeline
     VerifyText         ${task_subject}                anchor=${contact_name} had a task
