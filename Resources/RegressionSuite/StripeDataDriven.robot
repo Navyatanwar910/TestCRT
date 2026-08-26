@@ -5,12 +5,7 @@ Library                 QForce
 Library    QWeb
 Library    DateTime    # Required for timestamp generation
 Suite Setup             Open Browser    https://gsbexeced--full.sandbox.lightning.force.com    chrome
-Suite Teardown          Close All Browsers
 
-*** Variables ***
-${Stripe_Credentials.Card Number}
-${Stripe_Credentials.Exp Date}
-${Stripe_Credentials.CVC}
 
 *** Test Cases ***   
 Login To Salesforce Instance
