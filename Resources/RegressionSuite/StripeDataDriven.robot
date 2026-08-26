@@ -40,3 +40,9 @@ Login To Salesforce Instance
     ELSE
         VerifyText     Your card was declined.         timeout=10s
     END
+
+Cleanup Payment Window
+    [Documentation]    Closes open payment window and resets state between iterations.
+    CloseWindow
+    SwitchWindow       MAIN
+    CloseBrowser
