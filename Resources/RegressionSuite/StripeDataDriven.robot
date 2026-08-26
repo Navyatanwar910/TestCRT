@@ -35,5 +35,8 @@ Login To Salesforce Instance
     TypeText           Expiration date               ${Stripe_Credentials.Exp Date}
     TypeText           Security code                 ${Stripe_Credentials.CVC}
     ClickText          PAY NOW
-    VerifyText         Your card was declined.
-
+    IF    '${expected_response}' == 'Success'
+        VerifyText     Your payment was successful.    timeout=10s
+    ELSE
+        VerifyText     Your card was declined.         timeout=10s
+    END
