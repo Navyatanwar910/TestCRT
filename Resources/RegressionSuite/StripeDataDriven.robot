@@ -34,3 +34,4 @@ Login To Salesforce Instance
     TypeText           Expiration date               ${Stripe_Credentials.Exp Date}
     TypeText           Security code                 ${Stripe_Credentials.CVC}
     ClickText          PAY NOW
+    VerifyText         Your card was declined.
