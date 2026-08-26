@@ -35,7 +35,7 @@ Login To Salesforce Instance
     TypeText           Expiration date               ${Stripe_Credentials.Exp Date}
     TypeText           Security code                 ${Stripe_Credentials.CVC}
     ClickText          PAY NOW
-    IF    '${expected_response}' == 'Success'
+    IF    '${Stripe_Credentials.Expected Outcome}' == 'Success'
         VerifyText     Your payment was successful.    timeout=10s
     ELSE
         VerifyText     Your card was declined.         timeout=10s
@@ -44,5 +44,4 @@ Login To Salesforce Instance
 Cleanup Payment Window
     [Documentation]    Closes open payment window and resets state between iterations.
     CloseWindow
-    SwitchWindow       MAIN
     CloseBrowser
