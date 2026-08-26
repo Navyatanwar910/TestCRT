@@ -3,15 +3,12 @@ Documentation     Data-driven Stripe payment test suite iterating over all datas
 Library           QForce
 Library           QWeb
 Library           DateTime
-
+Library    DataDriver    reader_class=stripe_credential_4    name=Stripe Credentials.csv
 Test Setup        Login To Salesforce And Open Payment Page
 Test Teardown     Close Current Browser Session
 
 
 *** Variables ***
-${login_url}          https://gsbexeced--full.sandbox.lightning.force.com
-${username_Admin}     your_admin_username
-${password_Admin}     your_admin_password
 ${PROGRAM_NAME}       ACR-20260820-132926 - December 2026
 ${INVOICE_ID}         ACR-20260820-13-R6605
 ${PAYMENT_AMOUNT}     100
