@@ -6,6 +6,12 @@ Library    QWeb
 Library    DateTime    # Required for timestamp generation
 Suite Setup             Open Browser    https://gsbexeced--full.sandbox.lightning.force.com    chrome
 
+*** Variables ***
+${RECIPIENT_LASTNAME}         Tanwar
+${PROGRAM_NAME}               Program-Auto-20260827-120244 September 2026
+${RECIPIENT_SALUTATION}       Ms.
+${PROGRAM_DATES}              September 1, 2026 - August 31, 2027
+
 *** Test Cases ***
 Login To Salesforce Instance
     OpenBrowser    ${login_url}    chrome
@@ -87,12 +93,53 @@ Verify Creation of Participant
         ClickText    Contact                    partial_match=False
         TypeText     Search for a contact...    ${contact}
         ClickText    ${contact}
-        ClickText    Stage
         ClickText      Select an Option    anchor=*Stage
-        ClickText    Pending                    recognition_mode=On               anchor=Stage
+        ClickText      Pending                    recognition_mode=On               anchor=Stage
         ClickText    Save
         UseModal     Off
 
         # Allow record modal to save and clear before next iteration
         Sleep        2s
     END
+
+Verify Email Sent to Participant
+    ClickText          Enrollment    anchor=Overview
+    ClickText          Pending | Applicant
+    ClickElement       xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText    Admit with Invoice and Email
+    ClickText    Select Email Template
+    ClickText    Admit - On Campus
+    ClickText    Send Email(s)
+    ClickText    PayExed             anchor=Enrollment
+    ClickText       PayExed                        anchor=Enrollment
+    # Click blank space on the participant row to select without opening link
+    ClickElement       xpath=//tr[td[contains(.,'Navya Tanwar')]]/td[5]
+    # 1. Switch to Activity tab
+    ClickText          Activity                       anchor=Contact Highlights
+
+Verify Activity Email Subject And Body Against Template
+    [Documentation]    Opens the sent email entry in the Activity timeline and verifies merge fields.
+
+    # 1. Locate and expand the target email entry in the Activity timeline
+    ClickText        Acceptance: ${RECIPIENT_LASTNAME}    anchor=August 2026
+    
+    # 2. Verify Subject Line (Matches: Acceptance: {{{Recipient.LastName}}}: {{{Invoice__c.Program__c}}} ...)
+    VerifyText       Acceptance: ${RECIPIENT_LASTNAME}: ${PROGRAM_NAME}
+
+    # 3. Verify Salutation & Greeting
+    VerifyText       Dear ${RECIPIENT_LASTNAME},
+    
+    # 4. Verify Body Content & Dynamic Paragraphs
+    VerifyText       Congratulations! We are pleased to inform you of your acceptance to ${PROGRAM_NAME}
+    VerifyText       which will be held on the Stanford campus from ${PROGRAM_DATES}.
+    VerifyText       Attached is your letter of acceptance from
+    VerifyText       Please confirm your attendance in the program by replying to this email.
+    
+    # 5. Verify Payment Section
+    VerifyText       Payment:
+    VerifyText       To secure your place in the program, please remit payment per the invoice within 30 days.
+    VerifyText       To submit a credit card payment:
+    
+    # 6. Verify Closing Paragraphs & Signature
+    VerifyText       Logistics:
+    VerifyText       Congratulations again on your acceptance! The Stanford GSB Executive Education experience is a powerful catalyst for transformative change — in yourself, your company, and your career. It is designed to challenge your thinking, inspire growth, and connect you with a collaborative network of global business leaders. We look forward to welcoming you to the Stanford campus where our goal is to change lives, change organizations, and change the world.
