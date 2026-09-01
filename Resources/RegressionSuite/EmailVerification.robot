@@ -392,7 +392,7 @@ Verify Canceled Program Unpaid Email Template
     ClickElement     xpath=//tr[.//a[contains(text(),'Abhay Singhal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText        Send Email
     ClickText        Select Email Template
-    ClickText        Canceled Program – Unpaid
+    ClickText        Canceled Program - Unpaid
     ClickText        Send Email(s)
     Sleep            3s
 
@@ -426,7 +426,7 @@ Verify Canceled Program Paid Email Template
     ClickElement     xpath=//tr[.//a[contains(text(),'Abhay Singhal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText        Send Email
     ClickText        Select Email Template
-    ClickText        Canceled Program – Paid
+    ClickText        Canceled Program - Paid
     ClickText        Send Email(s)
     Sleep            3s
 
