@@ -22,7 +22,7 @@ Login To Salesforce Instance
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    F0M5KKN75K
+    TypeText      Verification Code    TJ3BC3T8DK
     ClickText     Verify
     VerifyText    Home
     ClickText     Programs             anchor=Home
@@ -314,4 +314,139 @@ Verify Reject - Deferral email Template
     # 4. Closing & Sign-off
     VerifyText       Should you have any questions or require further information, please do not hesitate to reach out.
     VerifyText       I look forward to hearing from you.
+    VerifyText       Sincerely,
+
+Verify Referral Email Template
+    [Documentation]    Verifies the Referral email selection, dispatch, and timeline text matching.
+
+    # 1. Dispatch Email via UI Modal
+    ClickText        Programs                        anchor=Home
+    ClickText        ${Acronym}
+    ClickText        PayExed                         anchor=Enrollment
+    ClickElement     xpath=//tr[.//a[contains(text(),'Abhay Singhal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText        Send Email
+    ClickText        Select Email Template
+    ClickText        Referral
+    ClickText        Send Email(s)
+    Sleep            3s
+
+    # 2. Navigate to Activity Timeline
+    ClickText        PayExed                         anchor=Enrollment
+    ClickElement     xpath=//tr[td[contains(.,'Abhay Singhal')]]/td[5]
+    ClickText        Activity                        anchor=Contact Highlights    
+
+    # 3. Open Email Entry & Verify Subject Line
+    ClickText        Singhal: Your Application to Stanford University Executive Education    anchor=1
+
+    # 4. Verify Body Content & Dynamic Paragraphs
+    VerifyText       Dear
+    VerifyText       Thank you for your application to
+    VerifyText       The admissions committee has reviewed your application and regrets that they are unable to offer you a place in the program.
+    VerifyText       Despite your strong qualifications, the competitive nature of the selection process has made it challenging to accommodate many great applicants like yourself this year.
+    VerifyText       We value your candidacy and encourage you to apply to any of our other Executive Education programs that might align with your interests and goals.
+    VerifyText       You may find our diverse range of programs here.
+    VerifyText       Please let me know if there is another program that interests you, and I would be happy to facilitate a connection with the respective program director.
+    VerifyText       Please feel free to reach out should you have any questions. We appreciate your understanding and hope to welcome you to one of our Executive Education programs soon.
+    VerifyText       Sincerely,
+
+Verify Reject Email Template
+    [Documentation]    Verifies the Reject email selection, dispatch, and timeline text matching.
+
+    # 1. Dispatch Email via UI Modal
+    ClickText        Programs                        anchor=Home
+    ClickText        ${Acronym}
+    ClickText        PayExed                         anchor=Enrollment
+    ClickElement     xpath=//tr[.//a[contains(text(),'Abhay Singhal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText        Send Email
+    ClickText        Select Email Template
+    ClickText        Reject
+    ClickText        Send Email(s)
+    Sleep            3s
+
+    # 2. Navigate to Activity Timeline
+    ClickText        PayExed                         anchor=Enrollment
+    ClickElement     xpath=//tr[td[contains(.,'Abhay Singhal')]]/td[5]
+    ClickText        Activity                        anchor=Contact Highlights    
+
+    # 3. Open Email Entry & Verify Subject Line
+    ClickText        Singhal: Your Application to Stanford University Executive Education    anchor=1
+
+    # 4. Verify Body Content & Dynamic Paragraphs
+    VerifyText       Dear
+    VerifyText       Thank you for your application to
+    VerifyText       Our Admissions Committee has carefully reviewed your application, regrets that we cannot offer you a place in
+    VerifyText       Program. The selection process has been very competitive due to a large number of applications received from highly qualified applicants.
+    VerifyText       While we make admission decisions very carefully and evaluate applications based on the candidates' objectives for the program,
+    VerifyText       diversity of professional experience and geographic diversity, there is necessarily a subjective element to the evaluation process.
+    VerifyText       We hope that you will understand that this outcome does not reflect on your many accomplishments.
+    VerifyText       Thank you again for your interest in the program. Should you have any questions or concerns, please feel free to contact me.
+    VerifyText       Sincerely,
+
+Verify Canceled Program Unpaid Email Template
+    [Documentation]    Verifies the Canceled Program (Unpaid) email selection, dispatch, and timeline text matching.
+
+    # 1. Dispatch Email via UI Modal
+    ClickText        Programs                        anchor=Home
+    ClickText        ${Acronym}
+    ClickText        PayExed                         anchor=Enrollment
+    ClickElement     xpath=//tr[.//a[contains(text(),'Abhay Singhal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText        Send Email
+    ClickText        Select Email Template
+    ClickText        Canceled Program – Unpaid
+    ClickText        Send Email(s)
+    Sleep            3s
+
+    # 2. Navigate to Activity Timeline
+    ClickText        PayExed                         anchor=Enrollment
+    ClickElement     xpath=//tr[td[contains(.,'Abhay Singhal')]]/td[5]
+    ClickText        Activity                        anchor=Contact Highlights    
+
+    # 3. Open Email Entry
+    ClickText        Singhal: Your Application to Stanford University Executive Education    anchor=1
+
+    # 4. Verify Body Content & Options
+    VerifyText       Dear
+    VerifyText       It had been our hope to welcome you to campus for your upcoming program.
+    VerifyText       However, we regret to inform you that the
+    VerifyText       program has been canceled. This decision was not made lightly, and we understand how disappointing this news may be.
+    VerifyText       We value your candidacy and would like to offer the following three options:
+    VerifyText       Attend Another Program. We can transfer your application to another one of our executive education programs.
+    VerifyText       Defer Admission. You may defer your admission and funds to the
+    VerifyText       In the meantime, please let me know if you have any questions.
+    VerifyText       Thank you for your understanding.
+    VerifyText       Sincerely,
+
+Verify Canceled Program Paid Email Template
+    [Documentation]    Verifies the Canceled Program (Paid) email selection, dispatch, and timeline text matching.
+
+    # 1. Dispatch Email via UI Modal
+    ClickText        Programs                        anchor=Home
+    ClickText        ${Acronym}
+    ClickText        PayExed                         anchor=Enrollment
+    ClickElement     xpath=//tr[.//a[contains(text(),'Abhay Singhal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickText        Send Email
+    ClickText        Select Email Template
+    ClickText        Canceled Program – Paid
+    ClickText        Send Email(s)
+    Sleep            3s
+
+    # 2. Navigate to Activity Timeline
+    ClickText        PayExed                         anchor=Enrollment
+    ClickElement     xpath=//tr[td[contains(.,'Abhay Singhal')]]/td[5]
+    ClickText        Activity                        anchor=Contact Highlights    
+
+    # 3. Open Email Entry & Verify Subject Line
+    ClickText        Singhal: Your Application to Stanford University Executive Education    anchor=1
+
+    # 4. Verify Body Content & Refund Option Paragraphs
+    VerifyText       Dear
+    VerifyText       It had been our hope to welcome you to campus for your upcoming program.
+    VerifyText       However, we regret to inform you that the
+    VerifyText       has been canceled. This decision was not made lightly, and we understand how disappointing this news may be.
+    VerifyText       We value your candidacy and would like to offer the following three options:
+    VerifyText       Attend Another Program. We can transfer your application and payment to another one of our executive education programs.
+    VerifyText       Defer Admission. You may defer your admission and funds to the
+    VerifyText       Request a Refund. You may request a refund of your money via your original form of payment.
+    VerifyText       Please let me know your decision regarding the above options
+    VerifyText       Thank you for your understanding.
     VerifyText       Sincerely,
