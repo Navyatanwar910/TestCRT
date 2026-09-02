@@ -447,5 +447,6 @@ Verify Change of Attendance status
     ClickElement       xpath=//*[@role='option' and .='Confirmed'] | //*[contains(@class,'slds-dropdown')]//*[text()='Confirmed']
     ClickText          Save                           anchor=Cancel
     UseModal           Off
-    
-    VerifyText         Confirmed                      anchor=Attendance
+    # 3. Click the ACR invoice link under Navya Tanwar
+    ClickElement       xpath=//a[contains(text(),'TestLessthan7-R6593 ')]
+    VerifyText         Communication Status
