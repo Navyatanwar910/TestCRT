@@ -12,23 +12,6 @@ ${CERT_FIRST_LINE}              Presents to
 ${CERT_SECOND_LINE}             this Certificate of Completion for the
 ${CERT_THIRD_LINE}              LEAD Cohort 2025
 
-# --- Signatory & Partner Details ---
-${SIGNATORY_1_NAME}             WESLEY HARTMANN
-${SIGNATORY_1_TITLE}            Senior Associate Dean
-${SIGNATORY_1_IMAGE}            WesleyHartmann
-
-${SIGNATORY_2_NAME}             BRIAN LOWERY
-${SIGNATORY_2_TITLE}            Faculty Director
-${SIGNATORY_2_IMAGE}            BrianLowery
-
-${SIGNATORY_3_NAME}             COLLINS DOBBS
-${SIGNATORY_3_TITLE}            Faculty Director
-${SIGNATORY_3_IMAGE}            CollinsDobbs
-
-${SIGNATORY_4_NAME}             SARAH SOULE
-${SIGNATORY_4_TITLE}            Dean, Stanford Graduate School of Business
-${SIGNATORY_4_IMAGE}            SarahSoule
-
 ${PARTNER_NAME}                 National Football League
 ${PARTNER_TITLE}                Chief Executive Officer
 ${PARTNER_SIG_IMAGE}            NFL_CEO_Signature
@@ -96,41 +79,13 @@ Populate Certificate Setup and Signature Sections
     TypeText         Certificate First Line          ${CERT_FIRST_LINE}
     TypeText         Certificate Second Line         ${CERT_SECOND_LINE}
 
-    # 3. Populate LEAD Section Fields
-    TypeText         Certificate Third Line          ${CERT_THIRD_LINE}
-    TypeText         Program Suffix                  ${PROGRAM_SUFFIX}
-    TypeText         Button Label                    ${BUTTON_LABEL}
-
     # 4. Populate Logos Section Fields
     DropDown         Exec Ed Logo (BCdiploma)        ${EXEC_ED_LOGO}
     TypeText         Text Between Logos              ${TEXT_BETWEEN_LOGOS}
     TypeText         Partner Logo (BCdiploma)        ${PARTNER_LOGO}
 
     # 5. Populate Signatory Fields
-    # Signatory 1
-    TypeText         Signatory 1 Name                ${SIGNATORY_1_NAME}
-    TypeText         Signatory 1 Title               ${SIGNATORY_1_TITLE}
-    DropDown         Signatory 1 Image               ${SIGNATORY_1_IMAGE}
 
-    # Signatory 2
-    TypeText         Signatory 2 Name                ${SIGNATORY_2_NAME}
-    TypeText         Signatory 2 Title               ${SIGNATORY_2_TITLE}
-    DropDown         Signatory 2 Image               ${SIGNATORY_2_IMAGE}
-
-    # Signatory 3
-    TypeText         Signatory 3 Name                ${SIGNATORY_3_NAME}
-    TypeText         Signatory 3 Title               ${SIGNATORY_3_TITLE}
-    DropDown         Signatory 3 Image               ${SIGNATORY_3_IMAGE}
-
-    # Signatory 4 (LEAD Specific)
-    TypeText         Signatory 4 Name                ${SIGNATORY_4_NAME}
-    TypeText         Signatory 4 Title               ${SIGNATORY_4_TITLE}
-    DropDown         Signatory 4 Image               ${SIGNATORY_4_IMAGE}
-
-    # Partner Signature Details
-    TypeText         Partner Name                    ${PARTNER_NAME}
-    TypeText         Partner Title                   ${PARTNER_TITLE}
-    TypeText         Partner Signature Image (BCdiploma)    ${PARTNER_SIG_IMAGE}
 
     # 6. Save Form and Verify Submission
     ClickText        Save                            timeout=20s
