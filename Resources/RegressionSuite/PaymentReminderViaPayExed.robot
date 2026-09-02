@@ -287,7 +287,6 @@ Verify Delete Reminder
 Verify All Reminder gets cancelled after invoice is Paid
     ClickText          PayExed
     ClickElement       xpath=//a[starts-with(text(),'ACR-')]
-    Sleep              5s
     ClickElement       xpath=//a[contains(@href,'pay')]
     SwitchWindow       NEW
     ClickText          Make Payment
@@ -375,7 +374,7 @@ Verify Creation of a Program and addition of Participants in it for sending paym
 Verify Payment Remainder through PayExed>20
     ClickText       PayExed                        anchor=Enrollment
     # Click blank space on the participant row to select without opening link
-    ClickElement       xpath=//tr[td[contains(.,'${contact_name}')]]/td[5]
+    ClickElement       xpath=//tr[td[contains(.,'Abhay Singhal')]]/td[5]
     # Navigate to Payment Reminders sub-tab in the right panel
     ClickText          Payment Reminders
 
@@ -399,7 +398,7 @@ Verify Details for Auto Created Payment schedule ->20
 Verify Payment reminder is transfer when participant is transfered
     RefreshPage
     ClickText          PayExed
-    ClickElement       xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickElement       xpath=//tr[.//a[contains(text(),'Abhay Singhal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText          Finance Request
     ClickText          Please select a type    anchor=Request Type:
     ClickText    Transfer               
@@ -420,7 +419,7 @@ Verify Payment reminder is transfer when participant is transfered
     ClickText                        AIP2 - April 2027
     SwitchWindow                     NEW
     ClickText                        Enrollment                        anchor=Overview
-    VerifyText                       Navya Tanwar
+    VerifyText                       Abhay Singhal
     Sleep                        2s
     ClickText                    PayExed                        anchor=Enrollment
     ClickText                    Programs
