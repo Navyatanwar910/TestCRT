@@ -129,6 +129,7 @@ Verify Details for Auto Created Payment schedule
     RefreshPage
 Verify Pause Payment Reminder
     # 1. Click Pause on the First Reminder card
+    ClickText
     ClickElement       xpath=//div[contains(.,'First Reminder')]//button[contains(.,'Pause')]
 
     # 2. Directly verify modal title and enter reason without UseModal
