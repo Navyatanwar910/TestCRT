@@ -73,7 +73,7 @@ Verify Creation of Participant
     [Documentation]    Iterates through each contact name in the list to create 5 participants.
     
     # 1. Define list of 5 contacts
-    @{CONTACT_NAME}=    Create List    A. Ahmed    Abhishek Mehta    Alok Gaur    Abhay Singhal
+    @{CONTACT_NAME}=    Create List    Abhishek Mehta    Alok Gaur    Abhay Singhal
     
     # 2. Navigate to Overview once
     ClickText    Overview
