@@ -126,7 +126,7 @@ Verify Details for Auto Created Payment schedule
 
     VerifyText                         Final Reminder
     VerifyText                         ${expected_final_date}         anchor=Final Reminder
-
+    RefreshPage
 Verify Pause Payment Reminder
     # 1. Click Pause on the First Reminder card
     ClickElement       xpath=//div[contains(.,'First Reminder')]//button[contains(.,'Pause')]
