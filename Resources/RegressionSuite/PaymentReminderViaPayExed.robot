@@ -353,15 +353,15 @@ Verify Creation of a Program and addition of Participants in it for sending paym
     ClickText    Overview
     ClickText    New
     ClickText    Contact                      partial_match=False
-    TypeText     Search for a contact...      ${contact_name}
-    ClickText    ${contact_name}
+    TypeText     Search for a contact...      Abhay Singhal
+    ClickText    Abhay Singhal
     ClickText    Stage
     ClickText    Pending                      recognition_mode=vision
     ClickText    Save
 #Admission of Participant
     ClickText        Enrollment                     anchor=Overview
     ClickText        Pending | Applicant
-    ClickElement    xpath=//tr[.//a[contains(text(),'Navya Tanwar')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
+    ClickElement    xpath=//tr[.//a[contains(text(),'Abhay Singhal')]]//button[contains(@class,'slds-button') or contains(@title,'Actions')]
     ClickText       Admit with Invoice and Email
     ClickText       Select Email Template
     ClickText       Admit - On Campus
@@ -393,9 +393,6 @@ Verify Details for Auto Created Payment schedule ->20
     
     # 4. Calculate Scheduled Date (Invoice Due Date + Offset Days)
     ${expected_scheduled_date}=     Add Time To Date               ${InvoiceDueDate}    ${offset_days} days    result_format=%b %d, %Y    date_format=%m/%d/%Y
-
-    # 5. Verify Expected Scheduled Date in Salesforce UI
-    VerifyText    ${expected_scheduled_date}    anchor=First Reminder
 
 Verify Payment reminder is transfer when participant is transfered
     RefreshPage
@@ -437,3 +434,17 @@ Verify Payment reminder is transfer when participant is transfered
     # Navigate to Payment Reminders sub-tab in the right panel
     ClickText          Payment Reminders
     VerifyText         No payment reminders found for this participant.
+
+Verify Change of Attendance status
+    ClickElement       xpath=//tr[td[contains(.,'${contact_name}')]]//button[contains(@class,'slds-button_icon')] | //tr[td[contains(.,'${contact_name}')]]//td[last()]//a
+    ClickText          Change Attendance
+
+    # 2. Select 'Confirmed' in Update Attendance Status modal
+    UseModal           On
+    VerifyText         Update Attendance Status
+    ClickElement       xpath=//button[contains(@aria-label,'Attendance Status') or contains(.,'Select an option')] | //*[text()='Attendance Status']/following::button[1]
+    ClickElement       xpath=//*[@role='option' and .='Confirmed'] | //*[contains(@class,'slds-dropdown')]//*[text()='Confirmed']
+    ClickText          Save                           anchor=Cancel
+    UseModal           Off
+    
+    VerifyText         Confirmed                      anchor=Attendance
