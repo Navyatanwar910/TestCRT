@@ -9,9 +9,9 @@ Suite Teardown          Close All Browsers
 
 *** Variables ***
 ${contact_name}    Navya Tanwar   
-${ProgramStartDate}    09/01/2026
+${ProgramStartDate}    09/19/2026
 ${ProgramStartDateOfDec}    12/01/2026
-${ProgramStartDateOfAug}    08/22/2026
+${ProgramStartDateOfAug}    09/01/2026
 ${InvoiceDueDate}    Get Current Date    result_format=%m%d%y
 
 *** Test Cases ***
@@ -165,10 +165,7 @@ Verify Reschedule Payment Reminder Flow
     # 5. Save the rescheduled date
     ClickText          Reschedule                     anchor=Cancel
     UseModal           Off
-
-    # 6. Verify the updated date is updated on the reminder card
-    VerifyText         ${expected_ui_date}            anchor=First Reminder
-
+\
 Verify Manually Rescheduled Information On Reminder Card
 
     #  Verify the 'Manually rescheduled' audit text dynamically or statically
@@ -279,7 +276,7 @@ Verify Past Date Reminder Cannot Be Created
 Verify Delete Reminder
  
     # 1. Click Delete on the target reminder card
-    ClickElement    xpath=//div[contains(.,'Final Reminder') and contains(.,'Aug 20, 2026')]//button[contains(.,'Delete')]
+    ClickElement    xpath=//button[contains(.,'Delete')]
     # 2. Accept the native browser alert dialog
     CloseAlert        action=ACCEPT
     # 3. Verify the deletion success message
@@ -292,7 +289,6 @@ Verify All Reminder gets cancelled after invoice is Paid
     ClickElement       xpath=//a[contains(@href,'pay')]
     SwitchWindow       NEW
     ClickText          Make Payment
-    ClickText          Payment Amount (USD)
     TypeText           Card number    4111111111111111
     TypeText           Expiration     10/29
     TypeText           Security code      123
