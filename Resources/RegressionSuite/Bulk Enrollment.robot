@@ -105,4 +105,5 @@ Verify Bulk Enrollment with Invoice and email
     ClickText    Select Email Template
     ClickText    Admit - On Campus
     ClickText    Send Email(s)
+    RefreshPage
     ClickText    PayExed                    anchor=Enrollment
