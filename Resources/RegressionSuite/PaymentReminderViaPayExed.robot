@@ -126,11 +126,16 @@ Verify Details for Auto Created Payment schedule
 
     VerifyText                         Final Reminder
     VerifyText                         ${expected_final_date}         anchor=Final Reminder
+    Sleep                        5s
     RefreshPage
 Verify Pause Payment Reminder
     # 1. Click Pause on the First Reminder card
-    ClickText
+    ClickText    PayExed    anchor=Enrollment
+    ClickElement       xpath=//tr[td[contains(.,'${contact_name}')]]/td[5]
+    ClickText          Payment Reminders
+
     ClickElement       xpath=//div[contains(.,'First Reminder')]//button[contains(.,'Pause')]
+    Sleep              2s
 
     # 2. Directly verify modal title and enter reason without UseModal
     UseModal           On
@@ -147,7 +152,7 @@ Verify Pause Payment Reminder
     VerifyText         Resume                         anchor=First Reminder
 
     VerifyText         2 Scheduled, 0 Sent, 1 Paused
-
+    Sleep              10s
 Verify Reschedule Payment Reminder Flow
     # 1. Click Reschedule button on the First Reminder card
     ClickElement       xpath=//div[contains(.,'First Reminder')]//button[contains(.,'Reschedule')]
@@ -166,6 +171,7 @@ Verify Reschedule Payment Reminder Flow
     # 5. Save the rescheduled date
     ClickText          Reschedule                     anchor=Cancel
     UseModal           Off
+    Sleep              10s
 \
 Verify Manually Rescheduled Information On Reminder Card
 
@@ -177,6 +183,7 @@ Verify Manually Rescheduled Information On Reminder Card
     #  Verify card action state buttons
     VerifyText         Resume                                     anchor=First Reminder
     VerifyText         Reschedule                                 anchor=First Reminder
+    Sleep              10s
 
 Verify PAUSE ALL REMINDERS when reminders are already paused
     # 1. Click 'Pause All Reminders' from the global dropdown menu
@@ -196,7 +203,7 @@ Verify PAUSE ALL REMINDERS when reminders are already paused
     UseModal           Off
 
     # 5. Verify the warning banner for paused state
-    Sleep              5s
+    Sleep              10s
 
 Verify resuming all payment reminders
     # 1. Click Resume button on First Reminder card
@@ -210,7 +217,7 @@ Verify resuming all payment reminders
 
     # 4. Verify status banner updates to show all reminders are scheduled
     VerifyText         3 Scheduled, 0 Sent, 0 Paused  timeout=10s
-
+    Sleep              10s
 Verify Adding New Reminder Via Plus Button
     # 1. Hover over the '+' button to display the tooltip text and click it
     ClickElement       xpath=//*[text()='Payment Reminders']/following::button[contains(@class,'slds-button_icon') or contains(@class,'lightning-button-icon')][1]
