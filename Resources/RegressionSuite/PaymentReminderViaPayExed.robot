@@ -44,7 +44,7 @@ Verify Creation of a Program and addition of Participants in it for sending paym
     TypeText           Program Name                   ${PROGRAM_NAME}
     TypeText           Acronym                        ${Acronym}
     TypeText           Start Date                     ${ProgramStartDateOfDec}
-    TypeText           End Date                       08/31/2027
+    TypeText           End Date                       09/30/2027
     TypeText           Program Fee                    200000
     DropDown           Acceptance Criteria            Application/Admission
     DropDown           Program Status                 Confirmed
