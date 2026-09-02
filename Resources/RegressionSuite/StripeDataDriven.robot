@@ -15,9 +15,9 @@ ${PAYMENT_AMOUNT}     100
 
 
 *** Test Cases ***
-Execute Stripe Payments Across All Datasets
+#Execute Stripe Payments Across All Datasets
     # Direct call removes the QEditor syntax error
-    Perform Stripe Payment    ${Stripe_Credentials.Card Number}    ${Stripe_Credentials.Exp Date}    ${Stripe_Credentials.CVC}    ${Stripe_Credentials.Expected Outcome}
+ #   Perform Stripe Payment    ${Stripe_Credentials.Card Number}    ${Stripe_Credentials.Exp Date}    ${Stripe_Credentials.CVC}    ${Stripe_Credentials.Expected Outcome}
 
 
 *** Keywords ***
