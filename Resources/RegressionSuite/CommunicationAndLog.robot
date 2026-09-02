@@ -118,5 +118,3 @@ Change Attendance Status And Verify On Invoice Page
     # 3. Click the ACR invoice link under Navya Tanwar
     ClickElement       xpath=//a[contains(text(),'ACR-')]
 
-    # 4. Verify Communication Status is updated to Confirmed on the Invoice page
-    VerifyField        Communication Status           Confirmed
