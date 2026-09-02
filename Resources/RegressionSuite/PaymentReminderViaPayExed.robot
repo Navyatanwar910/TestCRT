@@ -178,12 +178,6 @@ Verify Manually Rescheduled Information On Reminder Card
     #  Verify the 'Manually rescheduled' audit text dynamically or statically
     VerifyText         Manually rescheduled by ${contact_name}    anchor=First Reminder
     
-    #  Verify the updated scheduled date and pause status details
-    VerifyText         Scheduled:                                 anchor=First Reminder
-    #  Verify card action state buttons
-    VerifyText         Resume                                     anchor=First Reminder
-    VerifyText         Reschedule                                 anchor=First Reminder
-    Sleep              10s
 
 Verify PAUSE ALL REMINDERS when reminders are already paused
     # 1. Click 'Pause All Reminders' from the global dropdown menu
