@@ -44,11 +44,9 @@ Verify Activity Tab Functionality
     # Test Refresh and verify success toast notification
     ClickElement       xpath=//a[contains(text(),'Refresh') or contains(.,'Refresh')] | //button[contains(.,'Refresh')]
     VerifyText         Data refreshed successfully    timeout=10s
-
     # Test Search functionality
     TypeText           Search subject or body         ${search_term}
     VerifyText         ${search_term}                 timeout=5s
-    SetConfig          blue_mark                      ${FALSE}
     Sleep              5s
     # Clear search input
     TypeText           Search subject or body         ${EMPTY}
