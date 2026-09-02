@@ -17,7 +17,7 @@ Login To Salesforce Instance
     TypeSecret    Password    ${password_Admin}
     ClickText     Log In to Sandbox
     VerifyText    Verify Your Identity
-    TypeText      Verification Code    11KLAYEG2L
+    TypeText      Verification Code    10VDRWLTDR
     ClickText     Verify
     VerifyText    Home
     ClickText     Programs             anchor=Home
