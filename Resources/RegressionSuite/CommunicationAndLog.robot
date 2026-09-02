@@ -48,15 +48,10 @@ Verify Activity Tab Functionality
     # Test Search functionality
     TypeText           Search subject or body         ${search_term}
     VerifyText         ${search_term}                 timeout=5s
+    SetConfig          blue_mark                      ${FALSE}
     Sleep              5s
     # Clear search input
     TypeText           Search subject or body         ${EMPTY}
-
-    # 5. Expand individual activity timeline items
-  #  ScrollTo           Navya Tanwar had a payment
-  #  ClickElement       xpath=//*[text()='August 2026']/following::a[contains(.,'Payment -')][1] | //*[text()='August 2026']/following::button[contains(@class,'slds-button_icon')][1]
-   # VerifyText         Amount                         timeout=5s
-  #  Sleep              5s
 
     # 6. Test Collapse All / Expand All toggle
     ${is_collapse_present}=                           IsText    Collapse All    timeout=3s
@@ -64,9 +59,11 @@ Verify Activity Tab Functionality
         ClickText      Collapse All
         VerifyText     Expand All                     timeout=5s
         ClickText      Expand All
+        Sleep          5s
     ELSE
         ClickText      Expand All
         VerifyText     Collapse All                   timeout=5s
+        Sleep          5s
     END
     
 Verify Email Status In Activity Tab
@@ -116,5 +113,5 @@ Change Attendance Status And Verify On Invoice Page
     UseModal           Off
 
     # 3. Click the ACR invoice link under Navya Tanwar
-    ClickElement       xpath=//a[contains(text(),'ACR-')]
-
+    ClickElement       xpath=//a[contains(text(),'ACR-20260820-13-R6594')]
+    VerifyText         Communication Status
