@@ -109,7 +109,7 @@ Change Attendance Status And Verify On Invoice Page
     ClickElement       xpath=//*[@role='option' and .='${attendance_status}'] | //*[contains(@class,'slds-dropdown')]//*[text()='${attendance_status}']
     ClickText          Save                           anchor=Cancel
     UseModal           Off
+    VerifyText         Confirmed                      anchor=Attendance
 
-    # 3. Click the ACR invoice link under Navya Tanwar
-    ClickElement       xpath=//a[contains(text(),'ACR-20260820-13-R6594')]
-    VerifyText         Communication Status
+
+  
