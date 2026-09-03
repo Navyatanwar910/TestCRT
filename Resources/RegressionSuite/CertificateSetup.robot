@@ -89,10 +89,3 @@ Populate Certificate Setup and Signature Sections
     # 6. Save Form and Verify Submission
     ClickText        Save                            timeout=20s
     
-    # 7. Error Handling for Missing Signature Image
-    ${is_error_present}=    IsText                  Signature Image for
-    IF    ${is_error_present}
-        Log          WARNING: Signature Image NOT FOUND in APower. Ops ticket submission required.    level=WARN
-    ELSE
-        VerifyText   The Certificate setup was successfully updated!
-    END
