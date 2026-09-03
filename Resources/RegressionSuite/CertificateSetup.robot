@@ -75,18 +75,17 @@ Populate Certificate Setup and Signature Sections
 
     # 2. Populate non-auto-populated e-Certificate Setup Section
     # (Leaving Certificate Program Name, Certificate Program Name 2nd Line, and Program Start and End Dates as auto-populated)
-    ClickText        Edit Certificate First Line
-    TypeText         Certificate First Line          ${CERT_FIRST_LINE}
-    TypeText         Certificate Second Line         ${CERT_SECOND_LINE}
+    ClickText        Edit Certificate Type
+    ClickText        --None--                        anchor=Certificate Type
+    ClickText        Certificate of Completion          
+
 
     # 4. Populate Logos Section Fields
-    DropDown         Exec Ed Logo (BCdiploma)        ${EXEC_ED_LOGO}
-    TypeText         Text Between Logos              ${TEXT_BETWEEN_LOGOS}
+    ClickText        --None--                        anchor=Exec Ed Logo (BCdiploma)
+    ClickText        ExecEdLogo
     TypeText         Partner Logo (BCdiploma)        ${PARTNER_LOGO}
 
-    # 5. Populate Signatory Fields
-
-
+    
     # 6. Save Form and Verify Submission
     ClickText        Save                            timeout=20s
     
