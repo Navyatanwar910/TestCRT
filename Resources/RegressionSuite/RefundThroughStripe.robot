@@ -1,13 +1,13 @@
-Code snippet
 *** Settings ***
 Documentation       Process Payment in Salesforce and Issue Refund via Stripe Dashboard
 Library             QWeb
+Suite Setup        OpenBrowser    about:blank    chrome
 
 *** Variables ***
 ${login_url}    https://gsbexeced--full.sandbox.my.salesforce.com/
 ${username_Admin}    navya799@stanford.edu
 ${password_Admin}    GreenOrangeKiwi@123
-${CARD_NUMBER}          41414141414141
+${CARD_NUMBER}          4111111111111111
 ${CARD_EXP}             1228
 ${CARD_CVC}             123
 
@@ -31,6 +31,8 @@ Create Transaction In Salesforce And Refund In Stripe
     ClickText          Verify
     VerifyText         Home
     ClickText          Programs            anchor=Home
+    ClickText          ACR-20260902-161359 - September 2026
+    ClickText          PayExed             anchor=Enrollment
     ClickText     ACR-20260902-16-R6640    anchor=Navya K. Tanwar
     SwitchWindow                        NEW
     VerifyText                        Invoice Status                  timeout=10s
