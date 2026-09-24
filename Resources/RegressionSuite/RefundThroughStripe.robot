@@ -4,9 +4,9 @@ Documentation       Process Payment in Salesforce and Issue Refund via Stripe Da
 Library             QWeb
 
 *** Variables ***
-${login_url}
-${username_Admin}
-${password_Admin}
+${login_url}    https://gsbexeced--full.sandbox.my.salesforce.com/
+${username_Admin}    navya799@stanford.edu
+${password_Admin}    GreenOrangeKiwi@123
 ${INVOICE_ID}           ACR-20260902-16-R6640
 ${CARD_NUMBER}          4242424242424242
 ${CARD_EXP}             1228
