@@ -7,8 +7,7 @@ Library             QWeb
 ${login_url}    https://gsbexeced--full.sandbox.my.salesforce.com/
 ${username_Admin}    navya799@stanford.edu
 ${password_Admin}    GreenOrangeKiwi@123
-${INVOICE_ID}           ACR-20260902-16-R6640
-${CARD_NUMBER}          4242424242424242
+${CARD_NUMBER}          41414141414141
 ${CARD_EXP}             1228
 ${CARD_CVC}             123
 
@@ -28,7 +27,19 @@ Create Transaction In Salesforce And Refund In Stripe
     TypeSecret         Password            ${password_Admin}
     ClickText          Log In to Sandbox
     VerifyText         Verify Your Identity
-    TypeText           Verification Code   11KLAYEG2L
+    TypeText           Verification Code   QGVVMJMA4G
     ClickText          Verify
     VerifyText         Home
     ClickText          Programs            anchor=Home
+    ClickText     ACR-20260902-16-R6640    anchor=Navya K. Tanwar
+    SwitchWindow                        NEW
+    VerifyText                        Invoice Status                  timeout=10s
+    ClickElement       xpath=//a[contains(@href,'pay')]
+    SwitchWindow       NEW
+    ClickText         Make Payment
+    ClickText          Payment Amount (USD)
+    TypeText           Payment Amount (USD)    100
+    TypeText           Card number             ${CARD_NUMBER}
+    TypeText           Expiration date         ${CARD_EXP}
+    TypeText           Security code           ${CARD_CVC}
+    ClickText          PAY NOW
