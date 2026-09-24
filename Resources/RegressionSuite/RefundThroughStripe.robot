@@ -45,3 +45,4 @@ Create Transaction In Salesforce And Refund In Stripe
     TypeText           Expiration date         ${CARD_EXP}
     TypeText           Security code           ${CARD_CVC}
     ClickText          PAY NOW
+    
