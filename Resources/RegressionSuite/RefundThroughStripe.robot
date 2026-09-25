@@ -11,11 +11,6 @@ ${CARD_NUMBER}          4111111111111111
 ${CARD_EXP}             1228
 ${CARD_CVC}             123
 
-# Stripe Dashboard Config
-${STRIPE_URL}           https://dashboard.stripe.com/login
-${STRIPE_USER}          Kota1234@stanford.edu
-${STRIPE_PASS}          Salesforce@1234
-
 *** Test Cases ***
 Create Transaction In Salesforce And Refund In Stripe
     [Documentation]    Executes end-to-end payment creation in Salesforce and processes refund in Stripe.
